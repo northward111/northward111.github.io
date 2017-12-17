@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Home</title>
+  <title>ASIHttpRequest→AFNetwork，同步→异步 | Home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="ASIHttpRequest→AFNetwork，同步→异步项目上以前是用的ASIHttpRequest，一个典型的网络请求流程（请求新闻数据）如下： 在新闻列表页面中，加载新闻函数如下：12345678910111213141516-(void) fetchNews&amp;#123;    dispatch_queue_t newsQueue=dispatch_queue_create(&amp;quot;f">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Home">
+<meta property="og:title" content="ASIHttpRequest→AFNetwork，同步→异步">
 <meta property="og:url" content="http://yoursite.com/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/index.html">
 <meta property="og:site_name" content="Home">
 <meta property="og:description" content="ASIHttpRequest→AFNetwork，同步→异步项目上以前是用的ASIHttpRequest，一个典型的网络请求流程（请求新闻数据）如下： 在新闻列表页面中，加载新闻函数如下：12345678910111213141516-(void) fetchNews&amp;#123;    dispatch_queue_t newsQueue=dispatch_queue_create(&amp;quot;f">
-<meta property="og:updated_time" content="2017-12-17T04:00:08.000Z">
+<meta property="og:updated_time" content="2017-12-17T04:31:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Home">
+<meta name="twitter:title" content="ASIHttpRequest→AFNetwork，同步→异步">
 <meta name="twitter:description" content="ASIHttpRequest→AFNetwork，同步→异步项目上以前是用的ASIHttpRequest，一个典型的网络请求流程（请求新闻数据）如下： 在新闻列表页面中，加载新闻函数如下：12345678910111213141516-(void) fetchNews&amp;#123;    dispatch_queue_t newsQueue=dispatch_queue_create(&amp;quot;f">
   
     <link rel="alternate" href="/atom.xml" title="Home" type="application/atom+xml">
@@ -54,7 +54,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -73,6 +73,16 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ASIHttpRequest→AFNetwork，同步→异步
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="ASIHttpRequest→AFNetwork，同步→异步"><a href="#ASIHttpRequest→AFNetwork，同步→异步" class="headerlink" title="ASIHttpRequest→AFNetwork，同步→异步"></a>ASIHttpRequest→AFNetwork，同步→异步</h1><p>项目上以前是用的ASIHttpRequest，一个典型的网络请求流程（请求新闻数据）如下：<br> 在新闻列表页面中，加载新闻函数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">-(void) fetchNews</div><div class="line">&#123;</div><div class="line">    dispatch_queue_t newsQueue=dispatch_queue_create(&quot;fetchNewsList&quot;,NULL);</div><div class="line">    dispatch_async(newsQueue, ^&#123;</div><div class="line">        NSDictionary *dictNews= [NewsDAO getNews];</div><div class="line">        BOOL bPass =  [[dictNews objectForKey:@&quot;pass&quot;] boolValue];</div><div class="line">        if(bPass)&#123;</div><div class="line">            NSMutableArray *listTemp = (NSMutableArray*) [dictNews objectForKey:@“list”];</div><div class="line">            [self.listNews removeAllObjects];</div><div class="line">            [self.listNews addObjectsFromArray:listTemp];</div><div class="line">        &#125;</div><div class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">            [self.tableView reloadData];</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -90,7 +100,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/" data-id="cjba9sv300000hhs6l7evkbwn" class="article-share-link">Delen</a>
+      <a data-url="http://yoursite.com/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/" data-id="cjbacde8m0000lis6xf7yc78l" class="article-share-link">Share</a>
       
       
     </footer>
@@ -99,19 +109,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nieuwer</strong>
+    <a href="/2017/12/17/JZJModule接入指南/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          (no title)
+          JZJModule接入指南
         
       </div>
     </a>
   
   
-    <a href="/2017/12/17/IOS之多重代理（转载）/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
-      <div class="article-nav-title"></div>
+    <a href="/2017/12/17/AnyChat之UDP协议/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">AnyChat之UDP协议</div>
     </a>
   
 </nav>
@@ -133,7 +143,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
     </div>
@@ -143,28 +153,28 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/">(no title)</a>
+            <a href="/2017/12/17/JZJModule接入指南/">JZJModule接入指南</a>
           </li>
         
           <li>
-            <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/">(no title)</a>
+            <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/">ASIHttpRequest→AFNetwork，同步→异步</a>
           </li>
         
           <li>
-            <a href="/2017/12/17/IOS之多重代理（转载）/">(no title)</a>
+            <a href="/2017/12/17/AnyChat之UDP协议/">AnyChat之UDP协议</a>
           </li>
         
           <li>
-            <a href="/2017/12/17/IOS判断应用是否在新版本下第一次调用某方法/">(no title)</a>
+            <a href="/2017/12/17/IOS之多重代理（转载）/">IOS之多重代理（转载）</a>
           </li>
         
           <li>
-            <a href="/2017/12/17/IOS审核之不支持IPV6/">(no title)</a>
+            <a href="/2017/12/17/IOS判断应用是否在新版本下第一次调用某方法/">IOS判断应用是否在新版本下第一次调用某方法</a>
           </li>
         
       </ul>
