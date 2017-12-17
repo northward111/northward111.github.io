@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -61,9 +61,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-MBA外接显示器后关闭自带显示器" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-JZJModule接入指南" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/" class="article-date">
+    <a href="/2017/12/17/JZJModule接入指南/" class="article-date">
   <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
 </a>
     
@@ -75,7 +75,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/17/MBA外接显示器后关闭自带显示器/">MBA外接显示器后关闭自带显示器</a>
+      <a class="article-title" href="/2017/12/17/JZJModule接入指南/">JZJModule接入指南</a>
     </h1>
   
 
@@ -83,55 +83,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>MacBook Air屏幕太小，外接了一个显示器，感觉好多了，顺带配了外接的键鼠。因此，MBA本身就可以安安静静地一边呆着了，本身我是直接把它的盖子合上放到一边的，不过搜索了一番发现盖子合上之后会影响散热，甚至有的说会直接烘烤屏幕，这问题就大了，但是打开盖子之后，也不能直接设置屏幕只投射到外接显示器上，要么把外接显示器作为主显示器，内置的作为扩展屏幕，要么就是镜像屏幕，都不是我要的效果。</p>
-<p>网友的力量是强大的，发现两个解决方案：</p>
-<ol>
-<li>拿个磁铁放到电源接口附近，让电脑的感应器误以为已经合上盖子了，屏幕自然就熄了；</li>
-<li>在mac上调整屏幕亮度到最低，会发现内置显示器亮度调到了最低，基本可以看做熄了，同时外置显示器不受影响。</li>
-</ol>
-<p>磁铁的方案据说可能对电脑有损伤，所以还是第二个方法比较靠谱，推荐给大家。</p>
+        <h3 id="1-将JZJModule库引入工程"><a href="#1-将JZJModule库引入工程" class="headerlink" title="1.将JZJModule库引入工程"></a>1.将JZJModule库引入工程</h3><h5 id="源码形式"><a href="#源码形式" class="headerlink" title="源码形式"></a>源码形式</h5><p>直接将源码形式的JZJModule库加入工程中，则工程中使用到JZJModule功能的地方加上<code>#import &quot;JZJModule.h&quot;</code>即可</p>
+<h5 id="framework形式"><a href="#framework形式" class="headerlink" title="framework形式"></a>framework形式</h5><p>通过静态库framework的方式加入工程中，则工程中使用到JZJModule功能的地方加上<code>#import &lt;JZJModule/JZJModule.h&gt;</code>即可</p>
+<h3 id="2-定义自己的模块注册器"><a href="#2-定义自己的模块注册器" class="headerlink" title="2.定义自己的模块注册器"></a>2.定义自己的模块注册器</h3><p>模块注册器需要自己在工程中新建，下面给出一个示例<br><code>Register1.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;JZJModule.h&quot;</div><div class="line"></div><div class="line"></div><div class="line">@interface Registerer1 : NSObject&lt;JZJModuleRegisterProtocol&gt;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p><code>Register1.m</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line">#import &quot;Registerer1.h&quot;</div><div class="line">#import &quot;UIAlertView+Blocks.h&quot;</div><div class="line">#import &quot;Routable.h&quot;</div><div class="line">#import &quot;NSObject+GetObjFromJsonFile.h&quot;</div><div class="line"></div><div class="line">static NSMutableDictionary* blockTable=nil;</div><div class="line"></div><div class="line"></div><div class="line">@implementation Registerer1 &#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">+(void)load &#123;</div><div class="line">    [[JZJModuleRegisterCenter sharedCenter] addRegisterer:self.class];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(NSMutableDictionary *)getBlockTable&#123;</div><div class="line">    if(blockTable==nil)&#123;</div><div class="line">        blockTable=@&#123;&#125;.mutableCopy;</div><div class="line">    &#125;</div><div class="line">    return blockTable;</div><div class="line">&#125;</div><div class="line">+(void)registerType:(NSString*)type withBlock:(BOClickInTableBlock)block&#123;</div><div class="line">    NSMutableDictionary *info= [self getBlockTable];</div><div class="line">    if (info) &#123;</div><div class="line">        [info setObject:block forKey:type];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">+(void)registerTypes:(NSArray*)typeArray withBlock:(BOClickInTableBlock)block&#123;</div><div class="line">    for (NSString *type in typeArray) &#123;</div><div class="line">        [self registerType:type withBlock:block];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(void)register &#123;</div><div class="line">    [self registerInformation];</div><div class="line">    [self registerEvent];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(BOOL)responseClick:(JZJModuleBO *)moduleBO &#123;</div><div class="line">    BOOL result=NO;</div><div class="line">    if(moduleBO.moduleType==1)&#123;</div><div class="line">        result=YES;</div><div class="line">    &#125; else if(moduleBO.moduleType==2)&#123;</div><div class="line">        result=YES;</div><div class="line">    &#125;else&#123;</div><div class="line">        BOClickInTableBlock clickInTableBlock=[self getBlockTable][moduleBO.type];</div><div class="line">        if(clickInTableBlock)&#123;</div><div class="line">            result=YES;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(void)onClick:(JZJModuleBO *)moduleBO &#123;</div><div class="line">    if(moduleBO.moduleType==1)&#123;</div><div class="line">        [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:moduleBO.url] options:nil completionHandler:nil];</div><div class="line">    &#125; else if(moduleBO.moduleType==2)&#123;</div><div class="line">        [[Routable sharedRouter] open:moduleBO.url];</div><div class="line">    &#125;else&#123;</div><div class="line">        BOClickInTableBlock clickInTableBlock=[self getBlockTable][moduleBO.type];</div><div class="line">        if(clickInTableBlock)&#123;</div><div class="line">            clickInTableBlock(moduleBO);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(void)registerInformation &#123;</div><div class="line">    NSMutableArray *files=[NSMutableArray array];</div><div class="line">    [files addObject:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@&quot;JZJModule.json&quot;]];</div><div class="line">    for (int i=0; i&lt;files.count; i++) &#123;</div><div class="line">        NSString *filepath=files[i];</div><div class="line">        id jsonObject=[NSObject fromJsonFile:filepath];</div><div class="line">        if (jsonObject!=nil) &#123;</div><div class="line">            NSArray *jsonArray=jsonObject;</div><div class="line">            for (NSDictionary *info in jsonArray) &#123;</div><div class="line">                [JZJModuleBO registerType:info[@&quot;type&quot;] withInfomationDic:info];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">+(void)registerEvent &#123;</div><div class="line"></div><div class="line">    [self registerType:@&quot;type3&quot; withBlock:^(JZJModuleBO *bo) &#123;</div><div class="line">        [UIAlertView alertTitle:bo.name message:bo.desc];</div><div class="line">    &#125;];</div><div class="line">    [self registerTypes:@[@&quot;type5&quot;,@&quot;type6&quot;] withBlock:^(JZJModuleBO *bo) &#123;</div><div class="line">        NSMutableDictionary *params=@&#123;&#125;.mutableCopy;</div><div class="line">        params[@&quot;navTitle&quot;]=bo.name;</div><div class="line">        params[@&quot;content&quot;]=bo.desc;</div><div class="line">        [[Routable sharedRouter] open:@&quot;BlankTextVC&quot; animated:YES extraParams:params];</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>在这个示例注册器中，注册器从资源文件<code>JZJModule.json</code>文件中读取json字符串转成的字典，然后根据字典向模块注册中心注册新模块的基本注册信息，然后在<code>registerEvent</code>函数中指定模块对应的点击事件。当中使用了<code>Routable</code>的路由框架做页面跳转，详见<a href="https://github.com/clayallsopp/routable-ios" target="_blank" rel="external">https://github.com/clayallsopp/routable-ios</a>。下面给出<code>JZJModule.json</code>的内容<br><code>JZJModule.json</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">[&#123;</div><div class="line">	&quot;type&quot;: &quot;type1&quot;,</div><div class="line">	&quot;name&quot;: &quot;VC1&quot;,</div><div class="line">	&quot;img&quot;: &quot;img1&quot;,</div><div class="line">	&quot;moduleType&quot;: &quot;2&quot;,</div><div class="line">	&quot;url&quot;: &quot;VC1&quot;,</div><div class="line">	&quot;desc&quot;:&quot;VC1&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type2&quot;,</div><div class="line">	&quot;name&quot;: &quot;VC2&quot;,</div><div class="line">	&quot;img&quot;: &quot;img2&quot;,</div><div class="line">	&quot;moduleType&quot;: &quot;2&quot;,</div><div class="line">	&quot;url&quot;: &quot;VC2&quot;,</div><div class="line">	&quot;desc&quot;:&quot;VC2&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type3&quot;,</div><div class="line">	&quot;name&quot;: &quot;提示3&quot;,</div><div class="line">	&quot;img&quot;: &quot;img3&quot;,</div><div class="line">	&quot;desc&quot;:&quot;提示消息3&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type4&quot;,</div><div class="line">	&quot;name&quot;: &quot;提示4&quot;,</div><div class="line">	&quot;img&quot;: &quot;img4&quot;,</div><div class="line">	&quot;desc&quot;:&quot;提示消息4&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type5&quot;,</div><div class="line">	&quot;name&quot;: &quot;望庐山瀑布&quot;,</div><div class="line">	&quot;img&quot;: &quot;img5&quot;,</div><div class="line">	&quot;desc&quot;:&quot;日照香炉生紫烟，遥看瀑布挂前川。&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type6&quot;,</div><div class="line">	&quot;name&quot;: &quot;春晓&quot;,</div><div class="line">	&quot;img&quot;: &quot;img6&quot;,</div><div class="line">	&quot;desc&quot;:&quot;春眠不觉晓，处处闻啼鸟。&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type7&quot;,</div><div class="line">	&quot;name&quot;: &quot;打log&quot;,</div><div class="line">	&quot;img&quot;: &quot;img7&quot;,</div><div class="line">	&quot;desc&quot;: &quot;操作操作&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type8&quot;,</div><div class="line">	&quot;name&quot;: &quot;去网页&quot;,</div><div class="line">	&quot;img&quot;: &quot;img8&quot;,</div><div class="line">	&quot;moduleType&quot;: &quot;1&quot;,</div><div class="line">	&quot;url&quot;: &quot;http://www.baidu.com&quot;,</div><div class="line">	&quot;desc&quot;:&quot;http://www.baidu.com&quot;</div><div class="line">&#125;]</div></pre></td></tr></table></figure></p>
+<h3 id="3-在页面中使用模块信息"><a href="#3-在页面中使用模块信息" class="headerlink" title="3.在页面中使用模块信息"></a>3.在页面中使用模块信息</h3><p>页面中一般使用<code>UITableView</code>或者<code>UICollectionView</code>来装载模块对应的信息，下面给出一个<code>UITableView</code>页面的示例<br><code>TableVC.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;JZJModule.h&quot;</div><div class="line"></div><div class="line"></div><div class="line">@interface TableVC : UIViewController</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p><code>TableVC.m</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">#import &quot;TableVC.h&quot;</div><div class="line">#import &quot;Masonry.h&quot;</div><div class="line"></div><div class="line">static NSString * const cellReuse = @&quot;cellID&quot;;</div><div class="line"></div><div class="line">@interface TableVC()&lt;UITableViewDataSource,UITableViewDelegate&gt;</div><div class="line">@property (nonatomic, strong) UITableView *tableView;</div><div class="line">@property (nonatomic, strong) NSMutableArray *mCollectionItems;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation TableVC &#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line">-(void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    [self initData];</div><div class="line">    [self initView];</div><div class="line">    [self fetchCollectionItems];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)initView &#123;</div><div class="line">    [super initView];</div><div class="line">    _tableView=[UITableView new];</div><div class="line">    _tableView.dataSource=self;</div><div class="line">    _tableView.delegate=self;</div><div class="line">    [self.view addSubview:_tableView];</div><div class="line">    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">        make.edges.mas_equalTo(self.view);</div><div class="line">    &#125;];</div><div class="line">    [_tableView registerClass:JZJModuleTVCell.class forCellReuseIdentifier:cellReuse];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)initData&#123;</div><div class="line">    self.mCollectionItems=[NSMutableArray array];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)fetchCollectionItems &#123;</div><div class="line">    [self.mCollectionItems removeAllObjects];</div><div class="line">    NSArray *types=@[@&quot;type1&quot;,@&quot;type2&quot;,@&quot;type3&quot;,@&quot;type4&quot;,@&quot;type5&quot;,@&quot;type6&quot;,@&quot;type7&quot;,@&quot;type8&quot;];</div><div class="line">    for(int i=0;i&lt;types.count;i++)&#123;</div><div class="line">        JZJModuleBO *moduleBO=[JZJModuleBO instanceWithType:types[i]];</div><div class="line">        [self.mCollectionItems addObject:moduleBO];</div><div class="line">    &#125;</div><div class="line">    [self.tableView reloadData];</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section&#123;</div><div class="line">    return self.mCollectionItems.count;</div><div class="line">&#125;</div><div class="line">-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">    return 44;</div><div class="line">&#125;</div><div class="line">-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    JZJModuleTVCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuse forIndexPath:indexPath];</div><div class="line">    JZJModuleBO *item=self.mCollectionItems[indexPath.row];</div><div class="line">    [cell configureWithBO:item];</div><div class="line">    return cell;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p> 其中，<code>JZJModuleTVCell</code>是一种根据JZJModule的模块信息来适配的<code>UITableViewCell</code>，项目中也可以自定义。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/MBA外接显示器后关闭自带显示器/" data-id="cjbacde92000alis61c0ohw32" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-shouldInterceptRequest" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/17/shouldInterceptRequest/" class="article-date">
-  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/17/shouldInterceptRequest/">shouldInterceptRequest</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>该方法可以很方便地进行请求的拦截，可以实现用本地资源替换网络资源，可以用于某些静态资源的提前加载，缓存等<br>该方法运行在同一线程中，应该避免执行耗时操作，否则webview可能会阻塞</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/shouldInterceptRequest/" data-id="cjbacde96000dlis6k0gvw4mt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/17/JZJModule接入指南/" data-id="cjbad5yx4000aons6utzr7ovl" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -168,7 +132,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/java-bridge-method-can't-be-invoked-on-a-non-injected-object/" data-id="cjbacde95000clis6ptgmp7dk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/17/java-bridge-method-can't-be-invoked-on-a-non-injected-object/" data-id="cjbad5yx6000bons6mswmwcyr" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -178,9 +142,9 @@
 
 
   
-    <article id="post-记一次IOS审核交涉过程之相似应用被拒" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-MBA外接显示器后关闭自带显示器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/17/记一次IOS审核交涉过程之相似应用被拒/" class="article-date">
+    <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/" class="article-date">
   <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
 </a>
     
@@ -192,7 +156,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/17/记一次IOS审核交涉过程之相似应用被拒/">记一次IOS审核交涉过程之相似应用被拒</a>
+      <a class="article-title" href="/2017/12/17/MBA外接显示器后关闭自带显示器/">MBA外接显示器后关闭自带显示器</a>
     </h1>
   
 
@@ -200,25 +164,55 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h1><p>简单说一下问题背景吧，因为我司的苹果开发者账号发布了很多应用，但是这些应用其实都很类似，只是用到不同的项目上，每个项目都要求一个单独的应用。可能是由于应用的数量实在太多，又由于最近苹果审核团队加强了相似应用的审核力度，我司在最近几次的应用更新过程中中招了，提示我们的应用是相似应用，不让更新，不让上架了。当然，审核团队也给我们指了条明路，那就是把这些相似的应用全部整合到一起，成为一个容器应用，然后在应用内部再进行项目上的内容区分。<br>下面贴出整个交涉过程，都是在iTunes Connect上与审核团队的彼此回复内容。</p>
-<h2 id="第一次收到提示相似应用问题"><a href="#第一次收到提示相似应用问题" class="headerlink" title="第一次收到提示相似应用问题"></a>第一次收到提示相似应用问题</h2><blockquote>
-<h4 id="Nov-8-2017-at-4-30-AM"><a href="#Nov-8-2017-at-4-30-AM" class="headerlink" title="Nov 8, 2017 at 4:30 AM"></a>Nov 8, 2017 at 4:30 AM</h4><h5 id="From-Apple"><a href="#From-Apple" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="Guideline-4-3-Design"><a href="#Guideline-4-3-Design" class="headerlink" title="Guideline 4.3 - Design"></a>Guideline 4.3 - Design</h5><p>We noticed that your app appears to be created from a template. Your app provides the same feature set as many of the other apps you’ve submitted to the App Store; it simply varies in content or language.<br>Apps that duplicate content or functionality create clutter, diminish the overall experience for the end user, and reduce the ability of developers to market their apps.</p>
-<h5 id="Next-Steps"><a href="#Next-Steps" class="headerlink" title="Next Steps"></a>Next Steps</h5><p>To resolve this issue, please combine apps with similar feature sets into a single “container” app (using the in-app purchase API to deliver different content if appropriate).<br>Please reply to this message to indicate the app name and Apple ID of any “container” apps submitted under your Apple Developer Program account.<br>Best regards,<br>App Store Review</p>
-<h2 id="回复说明本应用为容器应用"><a href="#回复说明本应用为容器应用" class="headerlink" title="回复说明本应用为容器应用"></a>回复说明本应用为容器应用</h2><h4 id="Nov-8-2017-at-9-53-AM"><a href="#Nov-8-2017-at-9-53-AM" class="headerlink" title="Nov 8, 2017 at 9:53 AM"></a>Nov 8, 2017 at 9:53 AM</h4><h5 id="From-abcios-126-com-Co-Ltd"><a href="#From-abcios-126-com-Co-Ltd" class="headerlink" title="From abcios@126.com (*. Co., Ltd.)"></a>From abcios@126.com (<em>*</em>. Co., Ltd.)</h5><p>I’ve combined the apps with similar feature sets into a single “container” app. And the combined “container” app is just this one named “应用名称”. What do you expect me to do exactly? I’ll try my best to conform to the guidelines.<br>Best regards,<br>Zhang San</p>
-<h2 id="审核人员表示会继续往下审"><a href="#审核人员表示会继续往下审" class="headerlink" title="审核人员表示会继续往下审"></a>审核人员表示会继续往下审</h2><h4 id="Nov-9-2017-at-5-13-AM"><a href="#Nov-9-2017-at-5-13-AM" class="headerlink" title="Nov 9, 2017 at 5:13 AM"></a>Nov 9, 2017 at 5:13 AM</h4><h5 id="From-Apple-1"><a href="#From-Apple-1" class="headerlink" title="From Apple"></a>From Apple</h5><p>Hello,<br>Thank you for providing this information. We will continue the review, and will notify you if there are any further issues.<br>Best Regards,<br>App Store Review</p>
-<h2 id="审核提示应用内含有动态切换图标功能，但是切换入口不明显，也没有做相关说明"><a href="#审核提示应用内含有动态切换图标功能，但是切换入口不明显，也没有做相关说明" class="headerlink" title="审核提示应用内含有动态切换图标功能，但是切换入口不明显，也没有做相关说明"></a>审核提示应用内含有动态切换图标功能，但是切换入口不明显，也没有做相关说明</h2><h4 id="Nov-9-2017-at-5-18-AM"><a href="#Nov-9-2017-at-5-18-AM" class="headerlink" title="Nov 9, 2017 at 5:18 AM"></a>Nov 9, 2017 at 5:18 AM</h4><h5 id="From-Apple-2"><a href="#From-Apple-2" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="4-6-Design-Alternate-App-Icons"><a href="#4-6-Design-Alternate-App-Icons" class="headerlink" title="4. 6 Design - Alternate App Icons"></a>4. 6 Design - Alternate App Icons</h5><h5 id="Guideline-4-6-Design-Alternate-App-Icons"><a href="#Guideline-4-6-Design-Alternate-App-Icons" class="headerlink" title="Guideline 4.6 - Design - Alternate App Icons"></a>Guideline 4.6 - Design - Alternate App Icons</h5><p>We noticed that your app includes user-selectable icons but does not fulfill all of the requirements for using alternate icons. Specifically, </p>
-<ul>
-<li>your app includes user-selectable icons but does not provide a way to change the icons within the app.<h5 id="Next-Steps-1"><a href="#Next-Steps-1" class="headerlink" title="Next Steps"></a>Next Steps</h5>To resolve this issue, please ensure that your app’s icons can only be changed at the user’s request, are relevant to the content and functionality of your app, and can be reverted back to your app’s original icon.<br>For more information on user-selectable icons, including information on appropriate app icon sizes, please review the App Icon page of the iOS Human Interface Guidelines.<h2 id="之后我就临时屏蔽掉了应用中的动态修改图标功能，重新提交了应用。但是却再一次收到相似应用的提醒"><a href="#之后我就临时屏蔽掉了应用中的动态修改图标功能，重新提交了应用。但是却再一次收到相似应用的提醒" class="headerlink" title="之后我就临时屏蔽掉了应用中的动态修改图标功能，重新提交了应用。但是却再一次收到相似应用的提醒"></a>之后我就临时屏蔽掉了应用中的动态修改图标功能，重新提交了应用。但是却再一次收到相似应用的提醒</h2><h4 id="Nov-10-2017-at-12-47-AM"><a href="#Nov-10-2017-at-12-47-AM" class="headerlink" title="Nov 10, 2017 at 12:47 AM"></a>Nov 10, 2017 at 12:47 AM</h4><h5 id="From-Apple-3"><a href="#From-Apple-3" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="Guideline-4-3-Design-1"><a href="#Guideline-4-3-Design-1" class="headerlink" title="Guideline 4.3 - Design"></a>Guideline 4.3 - Design</h5>We noticed that your app appears to be created from a template. Your app provides the same feature set as many of the other apps you’ve submitted to the App Store; it simply varies in content or language.<br>Apps that duplicate content or functionality create clutter, diminish the overall experience for the end user, and reduce the ability of developers to market their apps.<h5 id="Next-Steps-2"><a href="#Next-Steps-2" class="headerlink" title="Next Steps"></a>Next Steps</h5>To resolve this issue, please combine apps with similar feature sets into a single “container” app (using the in-app purchase API to deliver different content if appropriate).<br>Please reply to this message to indicate the app name and Apple ID of any “container” apps submitted under your Apple Developer Program account.<br>Best regards,<br>App Store Review<h2 id="再次说明本应用为容器应用"><a href="#再次说明本应用为容器应用" class="headerlink" title="再次说明本应用为容器应用"></a>再次说明本应用为容器应用</h2><h4 id="Nov-11-2017-at-10-39-AM"><a href="#Nov-11-2017-at-10-39-AM" class="headerlink" title="Nov 11, 2017 at 10:39 AM"></a>Nov 11, 2017 at 10:39 AM</h4><h5 id="From-abcios-126-com-Co-Ltd-1"><a href="#From-abcios-126-com-Co-Ltd-1" class="headerlink" title="From abcios@126.com (*. Co., Ltd.)"></a>From abcios@126.com (<em>*</em>. Co., Ltd.)</h5>I’ve combined the apps with similar feature sets into a single “container” app. And the combined “container” app is just this one named “应用名称”. I’ve mentioned this before. What should I do now?<br>Best Regards,<br>Zhang San<h2 id="审核人员重新审核，表示登录不了，经排查应该是因为请求地址是纯ip地址，在IPV6网络环境下访问失败的问题"><a href="#审核人员重新审核，表示登录不了，经排查应该是因为请求地址是纯ip地址，在IPV6网络环境下访问失败的问题" class="headerlink" title="审核人员重新审核，表示登录不了，经排查应该是因为请求地址是纯ip地址，在IPV6网络环境下访问失败的问题"></a>审核人员重新审核，表示登录不了，经排查应该是因为请求地址是纯ip地址，在IPV6网络环境下访问失败的问题</h2><h4 id="Nov-11-2017-at-11-29-PM"><a href="#Nov-11-2017-at-11-29-PM" class="headerlink" title="Nov 11, 2017 at 11:29 PM"></a>Nov 11, 2017 at 11:29 PM</h4><h5 id="From-Apple-4"><a href="#From-Apple-4" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="4-3-Design-Spam"><a href="#4-3-Design-Spam" class="headerlink" title="4. 3 Design: Spam"></a>4. 3 Design: Spam</h5>Hello,<br>Thank you for providing this information. The app failed to log in and we are unable to access the app content. Screenshots of this issue have been attached for your reference.<br>Best Regards,<br>App Store Review<br>Screenshot-1111-072825.png<br>Screenshot-1111-072906.png<h2 id="在处理了ipv6的问题后，重新提交后又收到相似应用的回复"><a href="#在处理了ipv6的问题后，重新提交后又收到相似应用的回复" class="headerlink" title="在处理了ipv6的问题后，重新提交后又收到相似应用的回复"></a>在处理了ipv6的问题后，重新提交后又收到相似应用的回复</h2><h4 id="Nov-16-2017-at-8-20-AM"><a href="#Nov-16-2017-at-8-20-AM" class="headerlink" title="Nov 16, 2017 at 8:20 AM"></a>Nov 16, 2017 at 8:20 AM</h4><h5 id="From-Apple-5"><a href="#From-Apple-5" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="4-3-Design-Spam-1"><a href="#4-3-Design-Spam-1" class="headerlink" title="4. 3 Design: Spam"></a>4. 3 Design: Spam</h5>Guideline 4.3 - Design<br>This app duplicates the content and functionality of other apps submitted by you or another developer to the App Store, which is considered a form of spam.<br>Apps that simply duplicate content or functionality create clutter, diminish the overall experience for the end user, and reduce the ability of developers to market their apps.<br>The next submission of this app may require a longer review time.<h5 id="Next-Steps-3"><a href="#Next-Steps-3" class="headerlink" title="Next Steps"></a>Next Steps</h5></li>
-<li>Review the Design section of the App Store Review Guidelines.</li>
-<li>Ensure your app is compliant with all sections of the App Store Review Guidelines and the Terms &amp; Conditions of the Apple Developer Program. </li>
-<li>Once your app is fully compliant, resubmit your app for review.<br>Submitting apps designed to mislead or harm customers or evade the review process may result in the termination of your Apple Developer Program account. Review the Terms &amp; Conditions of the Apple Developer Program to learn more about our policies regarding termination.<br>If you believe your app is compliant with the App Store Review Guidelines, you may submit an appeal. Alternatively, you may provide additional details about your app by replying directly to this message.<h2 id="再次说明本应用为容器应用-1"><a href="#再次说明本应用为容器应用-1" class="headerlink" title="再次说明本应用为容器应用"></a>再次说明本应用为容器应用</h2><h4 id="Nov-16-2017-at-10-33-AM"><a href="#Nov-16-2017-at-10-33-AM" class="headerlink" title="Nov 16, 2017 at 10:33 AM"></a>Nov 16, 2017 at 10:33 AM</h4><h4 id="From-abcios-126-com-Co-Ltd-2"><a href="#From-abcios-126-com-Co-Ltd-2" class="headerlink" title="From abcios@126.com (*. Co., Ltd.)"></a>From abcios@126.com (<em>*</em>. Co., Ltd.)</h4>I’ve combined the apps with similar feature sets into a single “container” app. And the combined “container” app is just this one named “应用名称”. I’ve mentioned this before. What should I do now?<br>Best Regards,<br>Zhang San<br>#感想<br>这次的审核过程可谓是一波三折，从中可以看出每次提交审核之后，审核人员并不一定是上一次的审核人员，而且审核人员也不一定仔细查看了之前的审核记录，不然也不会在我说明了此应用为容器应用的情况下，每次都以同样的相似应用的理由拒绝。<br>还有，中间几次由于审核团队一直无视我前面的说明而以同样的方式拒绝，我还尝试过提起申述的方式。但是结果表明，申述的耗时比较长，而且一般也没能实际解决问题。相较而言，直接在iTunes Connect上进行回复还是较好的沟通方式。</li>
-</ul>
-</blockquote>
+        <p>MacBook Air屏幕太小，外接了一个显示器，感觉好多了，顺带配了外接的键鼠。因此，MBA本身就可以安安静静地一边呆着了，本身我是直接把它的盖子合上放到一边的，不过搜索了一番发现盖子合上之后会影响散热，甚至有的说会直接烘烤屏幕，这问题就大了，但是打开盖子之后，也不能直接设置屏幕只投射到外接显示器上，要么把外接显示器作为主显示器，内置的作为扩展屏幕，要么就是镜像屏幕，都不是我要的效果。</p>
+<p>网友的力量是强大的，发现两个解决方案：</p>
+<ol>
+<li>拿个磁铁放到电源接口附近，让电脑的感应器误以为已经合上盖子了，屏幕自然就熄了；</li>
+<li>在mac上调整屏幕亮度到最低，会发现内置显示器亮度调到了最低，基本可以看做熄了，同时外置显示器不受影响。</li>
+</ol>
+<p>磁铁的方案据说可能对电脑有损伤，所以还是第二个方法比较靠谱，推荐给大家。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/17/记一次IOS审核交涉过程之相似应用被拒/" data-id="cjbacde99000flis6bzkk3gq0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/17/MBA外接显示器后关闭自带显示器/" data-id="cjbad5yx7000cons6snxsyzv4" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-shouldInterceptRequest" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/shouldInterceptRequest/" class="article-date">
+  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/17/shouldInterceptRequest/">shouldInterceptRequest</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>该方法可以很方便地进行请求的拦截，可以实现用本地资源替换网络资源，可以用于某些静态资源的提前加载，缓存等<br>该方法运行在同一线程中，应该避免执行耗时操作，否则webview可能会阻塞</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/shouldInterceptRequest/" data-id="cjbad5yxc000fons6btvti293" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -256,7 +250,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/06/About/" data-id="cjbacde8r0001lis6qxyryb6c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/11/06/About/" data-id="cjbad5ywu0003ons6q18lr0dd" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -301,7 +295,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/10/30/hello-world/" data-id="cjbacde94000blis6yfmeohn5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/10/30/hello-world/" data-id="cjbad5yx20009ons6i9llh2er" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -340,16 +334,12 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/12/17/JZJModule接入指南/">JZJModule接入指南</a>
-          </li>
-        
-          <li>
-            <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/">ASIHttpRequest→AFNetwork，同步→异步</a>
+            <a href="/2017/12/17/JZJModule注册器协议/">JZJModule注册器协议</a>
           </li>
         
           <li>
@@ -361,7 +351,11 @@
           </li>
         
           <li>
-            <a href="/2017/12/17/IOS判断应用是否在新版本下第一次调用某方法/">IOS判断应用是否在新版本下第一次调用某方法</a>
+            <a href="/2017/12/17/记一次IOS审核交涉过程之相似应用被拒/">记一次IOS审核交涉过程之相似应用被拒</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS应用模块化开发之路/">IOS应用模块化开发之路</a>
           </li>
         
       </ul>
@@ -377,7 +371,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 Jiang Zijie<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
