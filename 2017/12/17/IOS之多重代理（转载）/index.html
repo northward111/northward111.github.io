@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="使用场景：UIScrollView的滑动位移的监听，一般是用UIScrollView的代理来实现的，但是有时候需要对一个UIScrollView在两个地方进行监听，那么很自然地就想到需要这两个地方都设置为UIScrollView的代理，不过UIScrollView的代理只能设置一个，有没有什么办法可以实现这一特别的需求呢，那就是利用Objective-C的消息转发机制实现的一个多重代理模型。引用自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Home">
+<meta property="og:url" content="http://yoursite.com/2017/12/17/IOS之多重代理（转载）/index.html">
+<meta property="og:site_name" content="Home">
+<meta property="og:description" content="使用场景：UIScrollView的滑动位移的监听，一般是用UIScrollView的代理来实现的，但是有时候需要对一个UIScrollView在两个地方进行监听，那么很自然地就想到需要这两个地方都设置为UIScrollView的代理，不过UIScrollView的代理只能设置一个，有没有什么办法可以实现这一特别的需求呢，那就是利用Objective-C的消息转发机制实现的一个多重代理模型。引用自">
+<meta property="og:updated_time" content="2017-12-17T04:00:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Home">
+<meta name="twitter:description" content="使用场景：UIScrollView的滑动位移的监听，一般是用UIScrollView的代理来实现的，但是有时候需要对一个UIScrollView在两个地方进行监听，那么很自然地就想到需要这两个地方都设置为UIScrollView的代理，不过UIScrollView的代理只能设置一个，有没有什么办法可以实现这一特别的需求呢，那就是利用Objective-C的消息转发机制实现的一个多重代理模型。引用自">
+  
+    <link rel="alternate" href="/atom.xml" title="Home" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Home</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-IOS之多重代理（转载）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/IOS之多重代理（转载）/" class="article-date">
+  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>使用场景：UIScrollView的滑动位移的监听，一般是用UIScrollView的代理来实现的，但是有时候需要对一个UIScrollView在两个地方进行监听，那么很自然地就想到需要这两个地方都设置为UIScrollView的代理，不过UIScrollView的代理只能设置一个，有没有什么办法可以实现这一特别的需求呢，那就是利用Objective-C的消息转发机制实现的一个多重代理模型。<br>引用自<a href="http://www.cocoachina.com/ios/20151208/14595.html" target="_blank" rel="external">http://www.cocoachina.com/ios/20151208/14595.html</a></p>
+<p>下面是原文：<br>在Objective-C中，经常使用delegate来在对象之间通信，但是delegate一般是对象间一对一的通信，有时候我们希望delegate方法由多个不同的对象来处理，比如UITableView继承于UIScrollView,我们希望他的delegate中UIScrollViewDelegate的方法由一个独立的类来处理，以便实现一些效果，比如像下图这样的头部图片滚动拉伸效果，只需要实现UIScrolViewDelegate的scrollViewDidScroll方法，这样做的好处是可以降低代码耦合度，将实现不同功能的方法封装在独立的delegate中，便于复用和维护管理。<br><strong>一、OC的消息机制</strong></p>
+<p>那么，怎样实现delegate方法的动态转发呢？这需要用到Objective-C的消息机制，我们都知道，在OC中，调用一个对象的方法，实际上是给对象发了一条消息，在编译Objective－C函数调用的语法时，会被翻译成一个C的函数调用：objc_msgSend(),例如：</p>
+<p><code>[array insertObject:foo atIndex:2];</code></p>
+<p><code>//会被翻译成:</code></p>
+<p><code>objc_msgSend(array, @selector(insertObject:atIndex), foo, 2);</code></p>
+<p>那么，objc_msgSend又做了哪些事呢？，以[object foo]为例:</p>
+<ol>
+<li><p>通过object的isa指针找到它的class</p>
+</li>
+<li><p>在class的method_list中找到foo</p>
+</li>
+<li><p>如果class中没找到foo，则继续往他的superclass中查找</p>
+</li>
+<li><p>一旦找到foo这个函数，就去执行对应的方法实现(IMP)</p>
+</li>
+</ol>
+<p>如果一直没有找到foo,OC的runtime将继续下面的步骤：</p>
+<p><strong>二、动态方法决议与消息转发</strong></p>
+<p>在Objective-C中，如果向一个对象发送一条该对象无法处理的消息(对应selector不存在)，会导致程序crash， 但是，在crash之前，oc的运行时系统会先经过以下两个步骤：</p>
+<ol>
+<li><p>Dynamic Method Resolution</p>
+</li>
+<li><p>Message Forwarding</p>
+</li>
+</ol>
+<p>1、Dynamic Method Resolution（动态方法决议）</p>
+<p>首先，如果调用的方法是实例方法，OC的运行时会调用－ (BOOL)resolveInstanceMethod:(SEL)sel，如果是类方法，则会调用+ (BOOL)resolveClassMethod:(SEL)sel 让我们可以在程序运行时动态的为一个selector提供实现,如果我们添加了函数的实现，并返回YES，运行时系统会重启一次消息的发送过程，调用动态添加的方法。例如,下面的例子：</p>
+<p><code>+ (BOOL)resolveInstanceMethod:(SEL)sel{</code></p>
+<p><code>if</code> <code>(sel == @selector(foo)) {</code></p>
+<p><code>class_addMethod([self class], sel, (IMP)dynamicMethodIMP, ``&quot;V@:&quot;``);</code></p>
+<p><code>return</code> <code>YES;</code></p>
+<p><code>}</code></p>
+<p><code>return</code> <code>[``super</code> <code>resolveInstanceMethod:sel];</code></p>
+<p><code>}</code></p>
+<p><code>void dynamicMethodIMP(id self, SEL _cmd){</code></p>
+<p><code>NSLog(@``&quot;%s&quot;``, __PRETTY_FUNCTION__);</code></p>
+<p><code>}</code></p>
+<p>class_addMethod 方法动态的添加新的方法与对应的实现，如果调用了[Foo foo],将会转到动态添加的dynamicMethodIMP 方法中。Objective-C的方法本质上是一个至少包含两个参数(id self, SEL _cmd)的C函数，这样，当重启消息发送时，就能在类中找到@selector(foo)了。而如果方法返回NO时，将会进入下一步：消息转发(Message Forwarding)</p>
+<p>2、Message Forwarding（消息转发）</p>
+<p>消息转发分为两步：</p>
+<ul>
+<li><p>首先运行时系统会调用- (id)forwardingTargetForSelector:(SEL)aSelector方法，如果这个方法中返回的不是nil或者self，运行时系统将把消息发送给返回的那个对象</p>
+</li>
+<li><p>如果- (id)forwardingTargetForSelector:(SEL)aSelector返回的是nil或者self，运行时系统首先会调用- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector方法来获得方法签名，方法签名记录了方法的参数和返回值的信息，如果－methodSignatureForSelector 返回的是nil, 运行时系统会抛出unrecognized selector exception，程序到这里就结束了。</p>
+</li>
+</ul>
+<p>整个流程可以用下面这张图表示</p>
+<p>[图片上传失败…(image-fc3697-1511765955273)]</p>
+<p> <strong>三、实现多重代理</strong> </p>
+<p>结合上面的流程分析，我么可以发现，要实现多重代理的分发，我们需要让Runtime系统运行到forwardInvocation这一步，并在该方法中将delegate方法分发到其他各个对象中去：</p>
+<p><code>- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector{</code></p>
+<p><code>NSMethodSignature *signature = [``super</code> <code>methodSignatureForSelector:aSelector];</code></p>
+<p><code>if</code> <code>(!signature) {</code></p>
+<p><code>for</code> <code>(id target ``in</code> <code>self.allDelegates) {</code></p>
+<p><code>if</code> <code>((signature = [target methodSignatureForSelector:aSelector])) {</code></p>
+<p><code>break``;</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>return</code> <code>signature;</code></p>
+<p><code>}</code></p>
+<p><code>- (void)forwardInvocation:(NSInvocation *)anInvocation{</code></p>
+<p><code>for</code> <code>(id target ``in</code> <code>self.allDelegates) {</code></p>
+<p><code>if</code> <code>([target respondsToSelector:anInvocation.selector]) {</code></p>
+<p><code>[anInvocation invokeWithTarget:target];</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p>由于我们调用delegate的方法时，一般会先调用[delegate responseToSelector]方法，所以，我们还需要实现这个方法：</p>
+<p><code>- (BOOL)respondsToSelector:(SEL)aSelector{</code></p>
+<p><code>if</code> <code>([``super</code> <code>respondsToSelector:aSelector]) {</code></p>
+<p><code>return</code> <code>YES;</code></p>
+<p><code>}</code></p>
+<p><code>for</code> <code>(id target ``in</code> <code>self.allDelegates) {</code></p>
+<p><code>if</code> <code>([target respondsToSelector:aSelector]) {</code></p>
+<p><code>return</code> <code>YES;</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>return</code> <code>NO;</code></p>
+<p><code>}</code></p>
+<p><code>@end</code></p>
+<p>然后我们来测试一下，新建一个ScrollDelegate类，实现UIScrollViewDelegate方法：</p>
+<p><code>#import &quot;ScrollDelegate.h&quot;</code></p>
+<p><code>@implementation ScrollDelegate</code></p>
+<p><code>- (void)scrollViewDidScroll:(UIScrollView *)scrollView{</code></p>
+<p><code>NSLog(@``&quot;%s&quot;``, __PRETTY_FUNCTION__);</code></p>
+<p><code>}</code></p>
+<p><code>@end</code></p>
+<p>然后再新建一个ViewController，也实现UIScrollViewDelegate方法，添加一个UIScrollView在controller的view中，然后设置scrollView的delegate为multipleProxy：</p>
+<p><code>#import &quot;ViewController.h&quot;</code></p>
+<p><code>#import &quot;MultipleDelegate.h&quot;</code></p>
+<p><code>#import &quot;ScrollDelegate.h&quot;</code></p>
+<p><code>@interface ViewController ()@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;</code></p>
+<p><code>@end</code></p>
+<p><code>@implementation ViewController{</code></p>
+<p><code>MultipleDelegate *_multipleDelegate;</code></p>
+<p><code>}</code></p>
+<p><code>- (void)viewDidLoad {</code></p>
+<p><code>[``super</code> <code>viewDidLoad];</code></p>
+<p><code>self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height * 2);</code></p>
+<p><code>_multipleDelegate = [MultipleDelegate ``new``];</code></p>
+<p><code>//添加要处理delegate方法的对象</code></p>
+<p><code>NSArray *array = @[self, [ScrollDelegate ``new``]];</code></p>
+<p><code>_multipleDelegate.allDelegates = array;</code></p>
+<p><code>self.scrollView.delegate = (id)_multipleDelegate;</code></p>
+<p><code>}</code></p>
+<p><code>- (void)scrollViewDidScroll:(UIScrollView *)scrollView{</code></p>
+<p><code>NSLog(@``&quot;%s&quot;``, __PRETTY_FUNCTION__);</code></p>
+<p><code>}</code></p>
+<p><code>@end</code></p>
+<p> |</p>
+<p>运行，滑动scrollView，看看控制台打印的信息：</p>
+<p><code>2015-11-01 11:07:49.199 MultipleDelegateDemo[4732:498520] -[ViewController scrollViewDidScroll:]</code></p>
+<p><code>2015-11-01 11:07:49.200 MultipleDelegateDemo[4732:498520] -[ScrollDelegate scrollViewDidScroll:]</code></p>
+<p><code>2015-11-01 11:07:49.227 MultipleDelegateDemo[4732:498520] -[ViewController scrollViewDidScroll:]</code></p>
+<p><code>2015-11-01 11:07:49.227 MultipleDelegateDemo[4732:498520] -[ScrollDelegate scrollViewDidScroll:]</code></p>
+<p> |</p>
+<p>很好，deegate方法已经被正确地转发给了两个对象了，看起来好像没什么不对，可是，细心的你一定会发现，这里存在retain cycle：controller -&gt; _multipleDelegate -&gt; controller，那么怎样解决这个问题呢？</p>
+<p><strong>四、NSPointerArray防止循环引用</strong></p>
+<p>因为NSArray会对对象进行retain操作，导致循环引用的产生，所以我们可以用NSPointerArray来解决这个问题，但是需要注意对于其他的delegate对象也需要在controller中对其强引用， 最终MultipleDelegateProxy的实现：</p>
+<p><code>#import &quot;KIZMultipleDelegateProxy.h&quot;</code></p>
+<p><code>@interface KIZMultipleDelegateProxy ()</code></p>
+<p><code>@property (nonatomic, strong) NSPointerArray *weakRefTargets;</code></p>
+<p><code>@end</code></p>
+<p><code>@implementation KIZMultipleDelegateProxy</code></p>
+<p><code>- (void)setDelegateTargets:(NSArray *)delegateTargets{</code></p>
+<p><code>self.weakRefTargets = [NSPointerArray weakObjectsPointerArray];</code></p>
+<p><code>for</code> <code>(id delegate ``in</code> <code>delegateTargets) {</code></p>
+<p><code>[self.weakRefTargets addPointer:(__bridge void *)delegate];</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>- (BOOL)respondsToSelector:(SEL)aSelector{</code></p>
+<p><code>if</code> <code>([``super</code> <code>respondsToSelector:aSelector]) {</code></p>
+<p><code>return</code> <code>YES;</code></p>
+<p><code>}</code></p>
+<p><code>for</code> <code>(id target ``in</code> <code>self.weakRefTargets) {</code></p>
+<p><code>if</code> <code>([target respondsToSelector:aSelector]) {</code></p>
+<p><code>return</code> <code>YES;</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>return</code> <code>NO;</code></p>
+<p><code>}</code></p>
+<p><code>- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector{</code></p>
+<p><code>NSMethodSignature *sig = [``super</code> <code>methodSignatureForSelector:aSelector];</code></p>
+<p><code>if</code> <code>(!sig) {</code></p>
+<p><code>for</code> <code>(id target ``in</code> <code>self.weakRefTargets) {</code></p>
+<p><code>if</code> <code>((sig = [target methodSignatureForSelector:aSelector])) {</code></p>
+<p><code>break``;</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>return</code> <code>sig;</code></p>
+<p><code>}</code></p>
+<p><code>//转发方法调用给所有delegate</code></p>
+<p><code>- (void)forwardInvocation:(NSInvocation *)anInvocation{</code></p>
+<p><code>for</code> <code>(id target ``in</code> <code>self.weakRefTargets) {</code></p>
+<p><code>if</code> <code>([target respondsToSelector:anInvocation.selector]) {</code></p>
+<p><code>[anInvocation invokeWithTarget:target];</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>}</code></p>
+<p><code>@end</code></p>
+<p><strong>五、小记</strong></p>
+<p>利用这个多重代理动态转发，我封装了一些独立的delegate实现的小功能，比如本文开头提到的TableView头部图片拉伸效果，放在github上：<a href="https://github.com/zziking/KIZBehavior" target="_blank" rel="external">https://github.com/zziking/KIZBehavior</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/IOS之多重代理（转载）/" data-id="cjba9sv360002hhs6k87ob21z" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/17/IOS判断应用是否在新版本下第一次调用某方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS之多重代理（转载）/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS判断应用是否在新版本下第一次调用某方法/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS审核之不支持IPV6/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jiang Zijie<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

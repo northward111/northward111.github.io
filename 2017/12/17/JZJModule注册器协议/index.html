@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一个模块主要包含两个方面的信息，一个是属性，一个是方法。其中，属性就是类似名称、图片、URL等信息；而方法主要就是指模块被点击后触发的事件。注册器的职责就是为模块填充这两方面的信息。为了在工程中能灵活地对模块信息进行管理，模块信息的注册信息管理采用了“一个中心，多地注册”的方式来进行。所谓的“一个中心”是指存在一个注册中心，负责统筹模块信息注册相关的事宜；而“多地注册”是指可以存在多个注册器，来添">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Home">
+<meta property="og:url" content="http://yoursite.com/2017/12/17/JZJModule注册器协议/index.html">
+<meta property="og:site_name" content="Home">
+<meta property="og:description" content="一个模块主要包含两个方面的信息，一个是属性，一个是方法。其中，属性就是类似名称、图片、URL等信息；而方法主要就是指模块被点击后触发的事件。注册器的职责就是为模块填充这两方面的信息。为了在工程中能灵活地对模块信息进行管理，模块信息的注册信息管理采用了“一个中心，多地注册”的方式来进行。所谓的“一个中心”是指存在一个注册中心，负责统筹模块信息注册相关的事宜；而“多地注册”是指可以存在多个注册器，来添">
+<meta property="og:updated_time" content="2017-12-17T04:00:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Home">
+<meta name="twitter:description" content="一个模块主要包含两个方面的信息，一个是属性，一个是方法。其中，属性就是类似名称、图片、URL等信息；而方法主要就是指模块被点击后触发的事件。注册器的职责就是为模块填充这两方面的信息。为了在工程中能灵活地对模块信息进行管理，模块信息的注册信息管理采用了“一个中心，多地注册”的方式来进行。所谓的“一个中心”是指存在一个注册中心，负责统筹模块信息注册相关的事宜；而“多地注册”是指可以存在多个注册器，来添">
+  
+    <link rel="alternate" href="/atom.xml" title="Home" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Home</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JZJModule注册器协议" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/JZJModule注册器协议/" class="article-date">
+  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一个模块主要包含两个方面的信息，一个是属性，一个是方法。其中，属性就是类似名称、图片、URL等信息；而方法主要就是指模块被点击后触发的事件。注册器的职责就是为模块填充这两方面的信息。为了在工程中能灵活地对模块信息进行管理，模块信息的注册信息管理采用了“一个中心，多地注册”的方式来进行。所谓的“一个中心”是指存在一个注册中心，负责统筹模块信息注册相关的事宜；而“多地注册”是指可以存在多个注册器，来添加模块注册信息。为了便于管理，我们约定注册器需要在自身的<code>+(void)load;</code>函数中将自身加入到注册中心中，这样我们就不必手动告诉注册中心工程中存在哪些注册器了。不同模块之间是以“type”属性作为唯一标识的，而不同注册器之间互相是没有感知的，也就是说注册器A在给一个“type”例如“type1”添加注册信息的同时，注册器B可能也在给“type1”添加注册信息，这就涉及到注册信息的冲突问题。冲突也分两个方面，属性的冲突和方法的冲突。属性的冲突是必然的，因为“type1”对应的名称不可能既是“name1”，又是“name2”，因此我们要求注册器提供一个优先级排序码，若两个注册器对同一“type”指定了属性信息，优先级高的注册器可以覆盖优先级低的注册器中的属性信息。方法的冲突则不是必然的，如果两个注册器都为“type1”指定了点击事件，那么我们可以认为最终只能执行其中一个注册器中的方法（优先级高的那个），也可以认为两个方法都可以执行（按照优先级先后执行），因此我们要求注册器还需要提供下面的信息：方法是否排他以及是否响应某模块。方法是否排他可以决定方法冲突时，是只执行优先级高的那个，还是按照优先级先后执行。是否响应某模块可以方便模块在被点击时筛选出可以响应自己的注册器。<br>因此，在模块被点击的时候，会执行下面的逻辑：</p>
+<ol>
+<li>从所有具有事件排他性的注册器中找到可以响应此模块点击事件的注册器，然后取出其中优先级最高的那一个来执行；</li>
+<li>找到所有不具有事件排他性的注册器，然后按照优先级顺序依次执行；</li>
+<li>执行外部绑定的其他执行事件；</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/JZJModule注册器协议/" data-id="cjba9sv3i0007hhs6czcld9pj" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/17/IOS推送集成/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/17/AnyChat之UDP协议/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS之多重代理（转载）/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS判断应用是否在新版本下第一次调用某方法/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS审核之不支持IPV6/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jiang Zijie<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

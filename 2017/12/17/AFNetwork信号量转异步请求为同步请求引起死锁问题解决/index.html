@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ASIHttpRequest→AFNetwork，同步→异步项目上以前是用的ASIHttpRequest，一个典型的网络请求流程（请求新闻数据）如下： 在新闻列表页面中，加载新闻函数如下：12345678910111213141516-(void) fetchNews&amp;#123;    dispatch_queue_t newsQueue=dispatch_queue_create(&amp;quot;f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Home">
+<meta property="og:url" content="http://yoursite.com/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/index.html">
+<meta property="og:site_name" content="Home">
+<meta property="og:description" content="ASIHttpRequest→AFNetwork，同步→异步项目上以前是用的ASIHttpRequest，一个典型的网络请求流程（请求新闻数据）如下： 在新闻列表页面中，加载新闻函数如下：12345678910111213141516-(void) fetchNews&amp;#123;    dispatch_queue_t newsQueue=dispatch_queue_create(&amp;quot;f">
+<meta property="og:updated_time" content="2017-12-17T04:00:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Home">
+<meta name="twitter:description" content="ASIHttpRequest→AFNetwork，同步→异步项目上以前是用的ASIHttpRequest，一个典型的网络请求流程（请求新闻数据）如下： 在新闻列表页面中，加载新闻函数如下：12345678910111213141516-(void) fetchNews&amp;#123;    dispatch_queue_t newsQueue=dispatch_queue_create(&amp;quot;f">
+  
+    <link rel="alternate" href="/atom.xml" title="Home" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Home</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-AFNetwork信号量转异步请求为同步请求引起死锁问题解决" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/" class="article-date">
+  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="ASIHttpRequest→AFNetwork，同步→异步"><a href="#ASIHttpRequest→AFNetwork，同步→异步" class="headerlink" title="ASIHttpRequest→AFNetwork，同步→异步"></a>ASIHttpRequest→AFNetwork，同步→异步</h1><p>项目上以前是用的ASIHttpRequest，一个典型的网络请求流程（请求新闻数据）如下：<br> 在新闻列表页面中，加载新闻函数如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">-(void) fetchNews</div><div class="line">&#123;</div><div class="line">    dispatch_queue_t newsQueue=dispatch_queue_create(&quot;fetchNewsList&quot;,NULL);</div><div class="line">    dispatch_async(newsQueue, ^&#123;</div><div class="line">        NSDictionary *dictNews= [NewsDAO getNews];</div><div class="line">        BOOL bPass =  [[dictNews objectForKey:@&quot;pass&quot;] boolValue];</div><div class="line">        if(bPass)&#123;</div><div class="line">            NSMutableArray *listTemp = (NSMutableArray*) [dictNews objectForKey:@“list”];</div><div class="line">            [self.listNews removeAllObjects];</div><div class="line">            [self.listNews addObjectsFromArray:listTemp];</div><div class="line">        &#125;</div><div class="line">        dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">            [self.tableView reloadData];</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p> 页面中直接使用GCD来将加载数据的操作放到后台线程中，NewsDAO的getNews方法为获取新闻数据的方法，该方法以同步请求方式返回新闻数据，内部调用的是ASIHttpRequest的同步方法。<br>后来发现使用AFNetwork来进行网络请求更加方便，AFNetwork推荐使用异步请求方式来进行请求，因此新闻页面中加载新闻的方法修改为如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">-(void) fetchNews</div><div class="line">&#123;</div><div class="line">    [NewsDAO getNewsSuccess:^(NSURLSessionDataTask *task, id  _Nullable responseObject) &#123;</div><div class="line">        NSMutableArray *newsArray=[PINewsBO getNewsListWithResponseObject:responseObject];//将结果转为实体数组</div><div class="line">        [self.listNews removeAllObjects];</div><div class="line">        [self.listNews addObjectsFromArray:newsArray];</div><div class="line">        [self.tableView reloadData];</div><div class="line">    </div><div class="line">    &#125; failure:^(NSURLSessionDataTask * _Nullable task, NSError *error) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;, error);</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>该方法中，NewsDAO的getNews方法为获取新闻的方法，该方法本身是一个异步方法，请求数据后触发回调来更新页面UI。<br>这样的调用方式的好处还是很明显的，突出的好处就是页面中不用再写那么多GCD的代码了，并且AFNetwork是现在主流网络库，更新及时，更加可靠。</p>
+<h1 id="同步方法中使用AFNetwork"><a href="#同步方法中使用AFNetwork" class="headerlink" title="同步方法中使用AFNetwork"></a>同步方法中使用AFNetwork</h1><p>但是鉴于现有项目上许多业务页面已经采用了老的写法，将他们全部改过来工作量还是不小的，那么如果希望在不更改现有页面的写法的基础上，将网络请求库更替为AFNetwork呢，也就是说如何在一个同步方法中使用AFNetwork呢？<br>经过一番搜索，得知一个较为可行的方案是采用信号量的方法来在同步方法中使用异步请求的方式，方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">-(NSString *)sync:(NSString *)urlStr params:(NSString *)params&#123;</div><div class="line">    __block NSString *resultStr=@&quot;&quot;;</div><div class="line">    AFHTTPSessionManager *manager=[AFHTTPSessionManager manager];</div><div class="line">    AFHTTPResponseSerializer *responseSerializer=[AFHTTPResponseSerializer serializer];</div><div class="line">    manager.responseSerializer=responseSerializer;</div><div class="line">    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); //创建信号量</div><div class="line">    [manager POST:urlStr parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) &#123;</div><div class="line">        if (responseObject) &#123;</div><div class="line">            NSString *responseStr=[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];</div><div class="line">            resultStr=responseStr;</div><div class="line">        &#125;</div><div class="line">        dispatch_semaphore_signal(semaphore);//不管请求状态是什么，都得发送信号，否则会一直卡着进程</div><div class="line">    &#125; failure:^(NSURLSessionDataTask *task, NSError *error) &#123;</div><div class="line">        dispatch_semaphore_signal(semaphore);//不管请求状态是什么，都得发送信号，否则会一直卡着进程</div><div class="line">    &#125;];</div><div class="line">    dispatch_semaphore_wait(semaphore,DISPATCH_TIME_FOREVER);  //等待</div><div class="line">    return resultStr;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>但是此方法在实践中遇到了诡异的问题，大多数请求都可以正常请求成功，但是有一部分请求却卡住了，应用直接不能动了，搜索得知是死锁了，在AFNetwork的请求方法的两个回调也就是success和failure回调中分别打上断点，运行程序发现，这两个回调都没有触发，果不其然。<br>上网搜索发现这个帖子<a href="http://www.cocoachina.com/bbs/read.php?tid=1695717" target="_blank" rel="external">http://www.cocoachina.com/bbs/read.php?tid=1695717</a></p>
+<blockquote>
+<p>如果没有什么特别制定，那么AF的两个回调Block均执行在主线程上。所以你这里实际上是已经死锁了。<br>打个断点你会发现两个Block根本没有办法执行，因为他们都需要等主线程执行完所有任务才会执行，而主线程堵在dispatch_semaphore_wait上了。而释放它的函数写在一个永远无法执行的Block里面。</p>
+</blockquote>
+<p>后面也给出了解决方案，就是给AFNetwork指定回调函数在子线程中执行就可以了，指定方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">manager.completionQueue=dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div></pre></td></tr></table></figure></p>
+<p>修改后的请求方法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">-(NSString *)sync:(NSString *)urlStr params:(NSString *)params&#123;</div><div class="line">    __block NSString *resultStr=@&quot;&quot;;</div><div class="line">    AFHTTPSessionManager *manager=[AFHTTPSessionManager manager];</div><div class="line">    manager.completionQueue=dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">    AFHTTPResponseSerializer *responseSerializer=[AFHTTPResponseSerializer serializer];</div><div class="line">    manager.responseSerializer=responseSerializer;</div><div class="line">    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0); //创建信号量</div><div class="line">    [manager POST:urlStr parameters:params progress:nil success:^(NSURLSessionDataTask *task, id responseObject) &#123;</div><div class="line">        if (responseObject) &#123;</div><div class="line">            NSString *responseStr=[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];</div><div class="line">            resultStr=responseStr;</div><div class="line">        &#125;</div><div class="line">        dispatch_semaphore_signal(semaphore);//不管请求状态是什么，都得发送信号，否则会一直卡着进程</div><div class="line">    &#125; failure:^(NSURLSessionDataTask *task, NSError *error) &#123;</div><div class="line">        dispatch_semaphore_signal(semaphore);//不管请求状态是什么，都得发送信号，否则会一直卡着进程</div><div class="line">    &#125;];</div><div class="line">    dispatch_semaphore_wait(semaphore,DISPATCH_TIME_FOREVER);  //等待</div><div class="line">    return resultStr;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/" data-id="cjba9sv300000hhs6l7evkbwn" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/17/IOS之多重代理（转载）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS之多重代理（转载）/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS判断应用是否在新版本下第一次调用某方法/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS审核之不支持IPV6/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jiang Zijie<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

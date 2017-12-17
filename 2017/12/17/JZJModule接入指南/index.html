@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.将JZJModule库引入工程源码形式直接将源码形式的JZJModule库加入工程中，则工程中使用到JZJModule功能的地方加上#import &amp;quot;JZJModule.h&amp;quot;即可 framework形式通过静态库framework的方式加入工程中，则工程中使用到JZJModule功能的地方加上#import &amp;lt;JZJModule/JZJModule.h&amp;gt;即可 2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Home">
+<meta property="og:url" content="http://yoursite.com/2017/12/17/JZJModule接入指南/index.html">
+<meta property="og:site_name" content="Home">
+<meta property="og:description" content="1.将JZJModule库引入工程源码形式直接将源码形式的JZJModule库加入工程中，则工程中使用到JZJModule功能的地方加上#import &amp;quot;JZJModule.h&amp;quot;即可 framework形式通过静态库framework的方式加入工程中，则工程中使用到JZJModule功能的地方加上#import &amp;lt;JZJModule/JZJModule.h&amp;gt;即可 2">
+<meta property="og:updated_time" content="2017-12-17T04:00:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Home">
+<meta name="twitter:description" content="1.将JZJModule库引入工程源码形式直接将源码形式的JZJModule库加入工程中，则工程中使用到JZJModule功能的地方加上#import &amp;quot;JZJModule.h&amp;quot;即可 framework形式通过静态库framework的方式加入工程中，则工程中使用到JZJModule功能的地方加上#import &amp;lt;JZJModule/JZJModule.h&amp;gt;即可 2">
+  
+    <link rel="alternate" href="/atom.xml" title="Home" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Home</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JZJModule接入指南" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/JZJModule接入指南/" class="article-date">
+  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-将JZJModule库引入工程"><a href="#1-将JZJModule库引入工程" class="headerlink" title="1.将JZJModule库引入工程"></a>1.将JZJModule库引入工程</h3><h5 id="源码形式"><a href="#源码形式" class="headerlink" title="源码形式"></a>源码形式</h5><p>直接将源码形式的JZJModule库加入工程中，则工程中使用到JZJModule功能的地方加上<code>#import &quot;JZJModule.h&quot;</code>即可</p>
+<h5 id="framework形式"><a href="#framework形式" class="headerlink" title="framework形式"></a>framework形式</h5><p>通过静态库framework的方式加入工程中，则工程中使用到JZJModule功能的地方加上<code>#import &lt;JZJModule/JZJModule.h&gt;</code>即可</p>
+<h3 id="2-定义自己的模块注册器"><a href="#2-定义自己的模块注册器" class="headerlink" title="2.定义自己的模块注册器"></a>2.定义自己的模块注册器</h3><p>模块注册器需要自己在工程中新建，下面给出一个示例<br><code>Register1.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;JZJModule.h&quot;</div><div class="line"></div><div class="line"></div><div class="line">@interface Registerer1 : NSObject&lt;JZJModuleRegisterProtocol&gt;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p><code>Register1.m</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line">#import &quot;Registerer1.h&quot;</div><div class="line">#import &quot;UIAlertView+Blocks.h&quot;</div><div class="line">#import &quot;Routable.h&quot;</div><div class="line">#import &quot;NSObject+GetObjFromJsonFile.h&quot;</div><div class="line"></div><div class="line">static NSMutableDictionary* blockTable=nil;</div><div class="line"></div><div class="line"></div><div class="line">@implementation Registerer1 &#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">+(void)load &#123;</div><div class="line">    [[JZJModuleRegisterCenter sharedCenter] addRegisterer:self.class];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(NSMutableDictionary *)getBlockTable&#123;</div><div class="line">    if(blockTable==nil)&#123;</div><div class="line">        blockTable=@&#123;&#125;.mutableCopy;</div><div class="line">    &#125;</div><div class="line">    return blockTable;</div><div class="line">&#125;</div><div class="line">+(void)registerType:(NSString*)type withBlock:(BOClickInTableBlock)block&#123;</div><div class="line">    NSMutableDictionary *info= [self getBlockTable];</div><div class="line">    if (info) &#123;</div><div class="line">        [info setObject:block forKey:type];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">+(void)registerTypes:(NSArray*)typeArray withBlock:(BOClickInTableBlock)block&#123;</div><div class="line">    for (NSString *type in typeArray) &#123;</div><div class="line">        [self registerType:type withBlock:block];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(void)register &#123;</div><div class="line">    [self registerInformation];</div><div class="line">    [self registerEvent];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(BOOL)responseClick:(JZJModuleBO *)moduleBO &#123;</div><div class="line">    BOOL result=NO;</div><div class="line">    if(moduleBO.moduleType==1)&#123;</div><div class="line">        result=YES;</div><div class="line">    &#125; else if(moduleBO.moduleType==2)&#123;</div><div class="line">        result=YES;</div><div class="line">    &#125;else&#123;</div><div class="line">        BOClickInTableBlock clickInTableBlock=[self getBlockTable][moduleBO.type];</div><div class="line">        if(clickInTableBlock)&#123;</div><div class="line">            result=YES;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return result;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(void)onClick:(JZJModuleBO *)moduleBO &#123;</div><div class="line">    if(moduleBO.moduleType==1)&#123;</div><div class="line">        [[UIApplication sharedApplication] openURL:[[NSURL alloc] initWithString:moduleBO.url] options:nil completionHandler:nil];</div><div class="line">    &#125; else if(moduleBO.moduleType==2)&#123;</div><div class="line">        [[Routable sharedRouter] open:moduleBO.url];</div><div class="line">    &#125;else&#123;</div><div class="line">        BOClickInTableBlock clickInTableBlock=[self getBlockTable][moduleBO.type];</div><div class="line">        if(clickInTableBlock)&#123;</div><div class="line">            clickInTableBlock(moduleBO);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">+(void)registerInformation &#123;</div><div class="line">    NSMutableArray *files=[NSMutableArray array];</div><div class="line">    [files addObject:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@&quot;JZJModule.json&quot;]];</div><div class="line">    for (int i=0; i&lt;files.count; i++) &#123;</div><div class="line">        NSString *filepath=files[i];</div><div class="line">        id jsonObject=[NSObject fromJsonFile:filepath];</div><div class="line">        if (jsonObject!=nil) &#123;</div><div class="line">            NSArray *jsonArray=jsonObject;</div><div class="line">            for (NSDictionary *info in jsonArray) &#123;</div><div class="line">                [JZJModuleBO registerType:info[@&quot;type&quot;] withInfomationDic:info];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">+(void)registerEvent &#123;</div><div class="line"></div><div class="line">    [self registerType:@&quot;type3&quot; withBlock:^(JZJModuleBO *bo) &#123;</div><div class="line">        [UIAlertView alertTitle:bo.name message:bo.desc];</div><div class="line">    &#125;];</div><div class="line">    [self registerTypes:@[@&quot;type5&quot;,@&quot;type6&quot;] withBlock:^(JZJModuleBO *bo) &#123;</div><div class="line">        NSMutableDictionary *params=@&#123;&#125;.mutableCopy;</div><div class="line">        params[@&quot;navTitle&quot;]=bo.name;</div><div class="line">        params[@&quot;content&quot;]=bo.desc;</div><div class="line">        [[Routable sharedRouter] open:@&quot;BlankTextVC&quot; animated:YES extraParams:params];</div><div class="line">    &#125;];</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p>在这个示例注册器中，注册器从资源文件<code>JZJModule.json</code>文件中读取json字符串转成的字典，然后根据字典向模块注册中心注册新模块的基本注册信息，然后在<code>registerEvent</code>函数中指定模块对应的点击事件。当中使用了<code>Routable</code>的路由框架做页面跳转，详见<a href="https://github.com/clayallsopp/routable-ios" target="_blank" rel="external">https://github.com/clayallsopp/routable-ios</a>。下面给出<code>JZJModule.json</code>的内容<br><code>JZJModule.json</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">[&#123;</div><div class="line">	&quot;type&quot;: &quot;type1&quot;,</div><div class="line">	&quot;name&quot;: &quot;VC1&quot;,</div><div class="line">	&quot;img&quot;: &quot;img1&quot;,</div><div class="line">	&quot;moduleType&quot;: &quot;2&quot;,</div><div class="line">	&quot;url&quot;: &quot;VC1&quot;,</div><div class="line">	&quot;desc&quot;:&quot;VC1&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type2&quot;,</div><div class="line">	&quot;name&quot;: &quot;VC2&quot;,</div><div class="line">	&quot;img&quot;: &quot;img2&quot;,</div><div class="line">	&quot;moduleType&quot;: &quot;2&quot;,</div><div class="line">	&quot;url&quot;: &quot;VC2&quot;,</div><div class="line">	&quot;desc&quot;:&quot;VC2&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type3&quot;,</div><div class="line">	&quot;name&quot;: &quot;提示3&quot;,</div><div class="line">	&quot;img&quot;: &quot;img3&quot;,</div><div class="line">	&quot;desc&quot;:&quot;提示消息3&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type4&quot;,</div><div class="line">	&quot;name&quot;: &quot;提示4&quot;,</div><div class="line">	&quot;img&quot;: &quot;img4&quot;,</div><div class="line">	&quot;desc&quot;:&quot;提示消息4&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type5&quot;,</div><div class="line">	&quot;name&quot;: &quot;望庐山瀑布&quot;,</div><div class="line">	&quot;img&quot;: &quot;img5&quot;,</div><div class="line">	&quot;desc&quot;:&quot;日照香炉生紫烟，遥看瀑布挂前川。&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type6&quot;,</div><div class="line">	&quot;name&quot;: &quot;春晓&quot;,</div><div class="line">	&quot;img&quot;: &quot;img6&quot;,</div><div class="line">	&quot;desc&quot;:&quot;春眠不觉晓，处处闻啼鸟。&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type7&quot;,</div><div class="line">	&quot;name&quot;: &quot;打log&quot;,</div><div class="line">	&quot;img&quot;: &quot;img7&quot;,</div><div class="line">	&quot;desc&quot;: &quot;操作操作&quot;</div><div class="line">&#125;, &#123;</div><div class="line">	&quot;type&quot;: &quot;type8&quot;,</div><div class="line">	&quot;name&quot;: &quot;去网页&quot;,</div><div class="line">	&quot;img&quot;: &quot;img8&quot;,</div><div class="line">	&quot;moduleType&quot;: &quot;1&quot;,</div><div class="line">	&quot;url&quot;: &quot;http://www.baidu.com&quot;,</div><div class="line">	&quot;desc&quot;:&quot;http://www.baidu.com&quot;</div><div class="line">&#125;]</div></pre></td></tr></table></figure></p>
+<h3 id="3-在页面中使用模块信息"><a href="#3-在页面中使用模块信息" class="headerlink" title="3.在页面中使用模块信息"></a>3.在页面中使用模块信息</h3><p>页面中一般使用<code>UITableView</code>或者<code>UICollectionView</code>来装载模块对应的信息，下面给出一个<code>UITableView</code>页面的示例<br><code>TableVC.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;JZJModule.h&quot;</div><div class="line"></div><div class="line"></div><div class="line">@interface TableVC : UIViewController</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p><code>TableVC.m</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">#import &quot;TableVC.h&quot;</div><div class="line">#import &quot;Masonry.h&quot;</div><div class="line"></div><div class="line">static NSString * const cellReuse = @&quot;cellID&quot;;</div><div class="line"></div><div class="line">@interface TableVC()&lt;UITableViewDataSource,UITableViewDelegate&gt;</div><div class="line">@property (nonatomic, strong) UITableView *tableView;</div><div class="line">@property (nonatomic, strong) NSMutableArray *mCollectionItems;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation TableVC &#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line">-(void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    [self initData];</div><div class="line">    [self initView];</div><div class="line">    [self fetchCollectionItems];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)initView &#123;</div><div class="line">    [super initView];</div><div class="line">    _tableView=[UITableView new];</div><div class="line">    _tableView.dataSource=self;</div><div class="line">    _tableView.delegate=self;</div><div class="line">    [self.view addSubview:_tableView];</div><div class="line">    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</div><div class="line">        make.edges.mas_equalTo(self.view);</div><div class="line">    &#125;];</div><div class="line">    [_tableView registerClass:JZJModuleTVCell.class forCellReuseIdentifier:cellReuse];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)initData&#123;</div><div class="line">    self.mCollectionItems=[NSMutableArray array];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)fetchCollectionItems &#123;</div><div class="line">    [self.mCollectionItems removeAllObjects];</div><div class="line">    NSArray *types=@[@&quot;type1&quot;,@&quot;type2&quot;,@&quot;type3&quot;,@&quot;type4&quot;,@&quot;type5&quot;,@&quot;type6&quot;,@&quot;type7&quot;,@&quot;type8&quot;];</div><div class="line">    for(int i=0;i&lt;types.count;i++)&#123;</div><div class="line">        JZJModuleBO *moduleBO=[JZJModuleBO instanceWithType:types[i]];</div><div class="line">        [self.mCollectionItems addObject:moduleBO];</div><div class="line">    &#125;</div><div class="line">    [self.tableView reloadData];</div><div class="line"></div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section&#123;</div><div class="line">    return self.mCollectionItems.count;</div><div class="line">&#125;</div><div class="line">-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">    return 44;</div><div class="line">&#125;</div><div class="line">-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    JZJModuleTVCell *cell = [tableView dequeueReusableCellWithIdentifier:cellReuse forIndexPath:indexPath];</div><div class="line">    JZJModuleBO *item=self.mCollectionItems[indexPath.row];</div><div class="line">    [cell configureWithBO:item];</div><div class="line">    return cell;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+<p> 其中，<code>JZJModuleTVCell</code>是一种根据JZJModule的模块信息来适配的<code>UITableViewCell</code>，项目中也可以自定义。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/JZJModule接入指南/" data-id="cjba9sv3k0009hhs6ondifwoo" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/17/AnyChat之UDP协议/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Nieuwer</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/17/java-bridge-method-can't-be-invoked-on-a-non-injected-object/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ouder</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS之多重代理（转载）/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS判断应用是否在新版本下第一次调用某方法/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS审核之不支持IPV6/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jiang Zijie<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

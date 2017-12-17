@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Home">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Home">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Home">
+  
+    <link rel="alternate" href="/atom.xml" title="Home" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Home</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-java-bridge-method-can&#39;t-be-invoked-on-a-non-injected-object" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/java-bridge-method-can't-be-invoked-on-a-non-injected-object/" class="article-date">
+  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在做android和web交互的时候遇到这样一个奇怪的错误提示<br>修改后的web端页面文件如下，修复了此问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">  &lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;utf-8&quot;&gt;</div><div class="line">    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;</div><div class="line">    &lt;title&gt;地图&lt;/title&gt;</div><div class="line">	&lt;meta name=&quot;viewport&quot; content=&quot;initial-scale=1.0, user-scalable=no, width=device-width&quot;/&gt;</div><div class="line">    &lt;link href=&quot;/favicon.ico&quot;&gt;</div><div class="line">	&lt;style&gt;</div><div class="line">		html&#123;</div><div class="line">			width:100%;</div><div class="line">			height:100%;</div><div class="line">		&#125;</div><div class="line">		body&#123;</div><div class="line">			padding:0px;</div><div class="line">			margin:0px;</div><div class="line">			width:100%;</div><div class="line">			height:100%;</div><div class="line">		&#125;</div><div class="line">		#map&#123;</div><div class="line">			width:100%;</div><div class="line">			height:100%;</div><div class="line">		&#125;</div><div class="line">	</div><div class="line">	&lt;/style&gt;</div><div class="line">  &lt;/head&gt;</div><div class="line">  &lt;body onload=&quot;loaded()&quot;&gt;</div><div class="line">	&lt;div id=&quot;map&quot;&gt;&lt;/div&gt;</div><div class="line">    &lt;script type=&apos;text/javascript&apos; src=&apos;http://27.17.44.53:8080/eUrbanGIS/library/gismobile/build/dist/egovagis.js&apos; charset=&apos;utf-8&apos;&gt;&lt;/script&gt;</div><div class="line">	&lt;script type=&apos;text/javascript&apos;&gt;</div><div class="line">		var map =  null;</div><div class="line">		var context = null;</div><div class="line">		function loaded()&#123;</div><div class="line">			var params = &#123;</div><div class="line">				contain:&quot;map&quot;,</div><div class="line">				enable3D:false,</div><div class="line">				serverURL:&apos;http://27.17.44.53:8080/eUrbanGIS/&apos;</div><div class="line">			&#125;</div><div class="line">			context=window[&quot;jsInterface&quot;]||&#123;&#125;;</div><div class="line">			map =  new eMap(params,context.mapLoadedCallback);</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		function callMap()&#123;</div><div class="line">			var funcName = arguments[0];</div><div class="line">			if(map[funcName])&#123;</div><div class="line">				var args = []; </div><div class="line">				for(var i=1;i&lt;arguments.length;i++)&#123;</div><div class="line">					if(context[arguments[i]])&#123;</div><div class="line">						args.push(proxy(context[arguments[i]],context));</div><div class="line">					&#125;else&#123;</div><div class="line">						args.push(arguments[i]);</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				return map[funcName].apply(map,args);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		function proxy(func,context)&#123;</div><div class="line">			return function()&#123;</div><div class="line">				func.apply(context,arguments);</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		function getUrlParam(name) &#123;</div><div class="line">			var reg = new RegExp(&quot;(^|&amp;)&quot; + name + &quot;=([^&amp;]*)(&amp;|$)&quot;); //构造一个含有目标参数的正则表达式对象</div><div class="line">			var r = window.location.search.substr(1).match(reg);  //匹配目标参数</div><div class="line">			if (r != null) return unescape(r[2]); return null; //返回参数值</div><div class="line">		&#125;</div><div class="line">	&lt;/script&gt;</div><div class="line">  &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/java-bridge-method-can't-be-invoked-on-a-non-injected-object/" data-id="cjba9sv3l000ahhs6szhbbfqt" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-放弃蒲公英，fir——内网发布IOS应用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/放弃蒲公英，fir——内网发布IOS应用/" class="article-date">
+  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="为什么要放弃蒲公英，fir"><a href="#为什么要放弃蒲公英，fir" class="headerlink" title="为什么要放弃蒲公英，fir"></a>为什么要放弃蒲公英，fir</h1><p>蒲公英和fir本身都是很不错的应用分发平台，可以直接将ipa上传到网站上生成应用分发网址，用户可以用手机直接访问网址安装IOS应用。但是因为种种原因，可能是组织上不希望应用放在第三方分发机构啊，可能是分发环境没有外网啊，反正就是希望能在内网环境下部署IOS app的分发网站。</p>
+<h1 id="站在巨人的肩膀上"><a href="#站在巨人的肩膀上" class="headerlink" title="站在巨人的肩膀上"></a>站在巨人的肩膀上</h1><p>本文是在<a href="http://www.jianshu.com/p/35ca63ec0d8e" target="_blank" rel="external">east520的这篇文章</a>的基础上的实践经验总结，希望大家在实践过程中少走弯路。</p>
+<h1 id="出现的问题以及解决方式"><a href="#出现的问题以及解决方式" class="headerlink" title="出现的问题以及解决方式"></a>出现的问题以及解决方式</h1><h5 id="编辑保存“-etc-apache2-httpd-conf-“文件时出现保存失败，权限不够的提示"><a href="#编辑保存“-etc-apache2-httpd-conf-“文件时出现保存失败，权限不够的提示" class="headerlink" title="编辑保存“/etc/apache2/httpd.conf “文件时出现保存失败，权限不够的提示"></a>编辑保存<strong>“/etc/apache2/httpd.conf “</strong>文件时出现保存失败，权限不够的提示</h5><p>这是因为该文件所在目录为根目录，当前登录用户权限不够导致，所以需要修改该文件的权限。修改该文件权限也需要su权限，要么在terminal中输入<code>sudo chmod 777 /etc/apache2/httpd.conf</code>，要么先输入<code>su</code>变成超级用户角色，再输入<code>chmod 777 /etc/apache2/httpd.conf</code>。修改文件权限之后就可以编辑保存了。</p>
+<h5 id="You-don’t-have-permission-to-access-ca-crt-on-this-server"><a href="#You-don’t-have-permission-to-access-ca-crt-on-this-server" class="headerlink" title="You don’t have permission to access /ca.crt on this server"></a>You don’t have permission to access /ca.crt on this server</h5><p>出现此问题是因为文章中的index.html内容中对于ca.crt文件的引用是http链接的地址，需要修改为https的链接。下面是修改后的index.html内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;</div><div class="line">&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</div><div class="line">&lt;title&gt;应用名字&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">&lt;h1 style=&quot;font-size:40pt&quot;&gt;iOS应用OTA安装&lt;h1/&gt;</div><div class="line">&lt;h1 style=&quot;font-size:40pt&quot;&gt;</div><div class="line">&lt;a title=&quot;iPhone&quot; href=&quot;itms-services://?action=download-manifest&amp;url=https://192.168.1.110/installIPA.plist&quot;&gt;Iphone Download&lt;/a&gt;</div><div class="line">&lt;h1/&gt;</div><div class="line">&lt;a title=&quot;iPhone&quot; href=&quot;https://192.168.1.110/ca.crt&quot;&gt;ssl 证书安装&lt;/a&gt;</div><div class="line">&lt;h1/&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure></p>
+<h5 id="点击网页中的Iphone-Download链接后，手机桌面上出现了新的应用图标，但是一直下载不了卡在那里"><a href="#点击网页中的Iphone-Download链接后，手机桌面上出现了新的应用图标，但是一直下载不了卡在那里" class="headerlink" title="点击网页中的Iphone Download链接后，手机桌面上出现了新的应用图标，但是一直下载不了卡在那里"></a>点击网页中的Iphone Download链接后，手机桌面上出现了新的应用图标，但是一直下载不了卡在那里</h5><p>此问题原因与上一个问题类似，plist文件中指向ipa文件的链接也要改为https的链接地址，否则访问不了也就会卡在那里。下面是修改后的plist文件内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div><div class="line">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;</div><div class="line">&lt;plist version=&quot;1.0&quot;&gt;</div><div class="line">&lt;dict&gt;</div><div class="line">	&lt;key&gt;items&lt;/key&gt;</div><div class="line">	&lt;array&gt;</div><div class="line">		&lt;dict&gt;</div><div class="line">			&lt;key&gt;assets&lt;/key&gt;</div><div class="line">			&lt;array&gt;</div><div class="line">				&lt;dict&gt;</div><div class="line">					&lt;key&gt;kind&lt;/key&gt;</div><div class="line">					&lt;string&gt;software-package&lt;/string&gt;</div><div class="line">					&lt;key&gt;url&lt;/key&gt;</div><div class="line">					&lt;string&gt;https://192.168.1.110/test.ipa&lt;/string&gt;</div><div class="line">				&lt;/dict&gt;</div><div class="line">			&lt;/array&gt;</div><div class="line">			&lt;key&gt;metadata&lt;/key&gt;</div><div class="line">			&lt;dict&gt;</div><div class="line">				&lt;key&gt;bundle-identifier&lt;/key&gt;</div><div class="line">				&lt;string&gt;必须和打包的bundleidentifier一样&lt;/string&gt;</div><div class="line">				&lt;key&gt;bundle-version&lt;/key&gt;</div><div class="line">				&lt;string&gt;版本号&lt;/string&gt;</div><div class="line">				&lt;key&gt;kind&lt;/key&gt;</div><div class="line">				&lt;string&gt;software&lt;/string&gt;</div><div class="line">				&lt;key&gt;releaseNotes&lt;/key&gt;</div><div class="line">				&lt;string&gt;v1(可以随意填)&lt;/string&gt;</div><div class="line">				&lt;key&gt;title&lt;/key&gt;</div><div class="line">				&lt;string&gt;App名称&lt;/string&gt;</div><div class="line">			&lt;/dict&gt;</div><div class="line">		&lt;/dict&gt;</div><div class="line">	&lt;/array&gt;</div><div class="line">&lt;/dict&gt;</div><div class="line">&lt;/plist&gt;</div></pre></td></tr></table></figure></p>
+<h1 id="也可以选择偷懒"><a href="#也可以选择偷懒" class="headerlink" title="也可以选择偷懒"></a>也可以选择偷懒</h1><p>如果觉得上述方式还是太麻烦，也可以选择采用现有的一个第三方工具来生成发布网站，详见<a href="https://github.com/bumaociyuan/ios-ipa-server" target="_blank" rel="external">https://github.com/bumaociyuan/ios-ipa-server</a></p>
+<h1 id="新版xcode自动生成plist文件"><a href="#新版xcode自动生成plist文件" class="headerlink" title="新版xcode自动生成plist文件"></a>新版xcode自动生成plist文件</h1><p>新版xcode增加了对于自己搭建网站发布ipa应用的支持，在导出ipa包的时候会让选择是否生成对应plist文件，可以将xcode生成的plist文件作为plist文件的模板，毕竟自家生成的格式上还是比较正规的<br><img src="http://upload-images.jianshu.io/upload_images/2604347-7b76ef2220714b72.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择是否导出plist"><br><img src="http://upload-images.jianshu.io/upload_images/2604347-65feb462383415e5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="填写plist中的关键信息"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/放弃蒲公英，fir——内网发布IOS应用/" data-id="cjba9sv3q000ehhs683t4kcm2" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-shouldInterceptRequest" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/shouldInterceptRequest/" class="article-date">
+  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>该方法可以很方便地进行请求的拦截，可以实现用本地资源替换网络资源，可以用于某些静态资源的提前加载，缓存等<br>该方法运行在同一线程中，应该避免执行耗时操作，否则webview可能会阻塞</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/shouldInterceptRequest/" data-id="cjba9sv3p000dhhs6gintne77" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-记一次IOS审核交涉过程之相似应用被拒" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/17/记一次IOS审核交涉过程之相似应用被拒/" class="article-date">
+  <time datetime="2017-12-17T04:00:08.000Z" itemprop="datePublished">2017-12-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h1><p>简单说一下问题背景吧，因为我司的苹果开发者账号发布了很多应用，但是这些应用其实都很类似，只是用到不同的项目上，每个项目都要求一个单独的应用。可能是由于应用的数量实在太多，又由于最近苹果审核团队加强了相似应用的审核力度，我司在最近几次的应用更新过程中中招了，提示我们的应用是相似应用，不让更新，不让上架了。当然，审核团队也给我们指了条明路，那就是把这些相似的应用全部整合到一起，成为一个容器应用，然后在应用内部再进行项目上的内容区分。<br>下面贴出整个交涉过程，都是在iTunes Connect上与审核团队的彼此回复内容。</p>
+<h2 id="第一次收到提示相似应用问题"><a href="#第一次收到提示相似应用问题" class="headerlink" title="第一次收到提示相似应用问题"></a>第一次收到提示相似应用问题</h2><blockquote>
+<h4 id="Nov-8-2017-at-4-30-AM"><a href="#Nov-8-2017-at-4-30-AM" class="headerlink" title="Nov 8, 2017 at 4:30 AM"></a>Nov 8, 2017 at 4:30 AM</h4><h5 id="From-Apple"><a href="#From-Apple" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="Guideline-4-3-Design"><a href="#Guideline-4-3-Design" class="headerlink" title="Guideline 4.3 - Design"></a>Guideline 4.3 - Design</h5><p>We noticed that your app appears to be created from a template. Your app provides the same feature set as many of the other apps you’ve submitted to the App Store; it simply varies in content or language.<br>Apps that duplicate content or functionality create clutter, diminish the overall experience for the end user, and reduce the ability of developers to market their apps.</p>
+<h5 id="Next-Steps"><a href="#Next-Steps" class="headerlink" title="Next Steps"></a>Next Steps</h5><p>To resolve this issue, please combine apps with similar feature sets into a single “container” app (using the in-app purchase API to deliver different content if appropriate).<br>Please reply to this message to indicate the app name and Apple ID of any “container” apps submitted under your Apple Developer Program account.<br>Best regards,<br>App Store Review</p>
+<h2 id="回复说明本应用为容器应用"><a href="#回复说明本应用为容器应用" class="headerlink" title="回复说明本应用为容器应用"></a>回复说明本应用为容器应用</h2><h4 id="Nov-8-2017-at-9-53-AM"><a href="#Nov-8-2017-at-9-53-AM" class="headerlink" title="Nov 8, 2017 at 9:53 AM"></a>Nov 8, 2017 at 9:53 AM</h4><h5 id="From-abcios-126-com-Co-Ltd"><a href="#From-abcios-126-com-Co-Ltd" class="headerlink" title="From abcios@126.com (*. Co., Ltd.)"></a>From abcios@126.com (<em>*</em>. Co., Ltd.)</h5><p>I’ve combined the apps with similar feature sets into a single “container” app. And the combined “container” app is just this one named “应用名称”. What do you expect me to do exactly? I’ll try my best to conform to the guidelines.<br>Best regards,<br>Zhang San</p>
+<h2 id="审核人员表示会继续往下审"><a href="#审核人员表示会继续往下审" class="headerlink" title="审核人员表示会继续往下审"></a>审核人员表示会继续往下审</h2><h4 id="Nov-9-2017-at-5-13-AM"><a href="#Nov-9-2017-at-5-13-AM" class="headerlink" title="Nov 9, 2017 at 5:13 AM"></a>Nov 9, 2017 at 5:13 AM</h4><h5 id="From-Apple-1"><a href="#From-Apple-1" class="headerlink" title="From Apple"></a>From Apple</h5><p>Hello,<br>Thank you for providing this information. We will continue the review, and will notify you if there are any further issues.<br>Best Regards,<br>App Store Review</p>
+<h2 id="审核提示应用内含有动态切换图标功能，但是切换入口不明显，也没有做相关说明"><a href="#审核提示应用内含有动态切换图标功能，但是切换入口不明显，也没有做相关说明" class="headerlink" title="审核提示应用内含有动态切换图标功能，但是切换入口不明显，也没有做相关说明"></a>审核提示应用内含有动态切换图标功能，但是切换入口不明显，也没有做相关说明</h2><h4 id="Nov-9-2017-at-5-18-AM"><a href="#Nov-9-2017-at-5-18-AM" class="headerlink" title="Nov 9, 2017 at 5:18 AM"></a>Nov 9, 2017 at 5:18 AM</h4><h5 id="From-Apple-2"><a href="#From-Apple-2" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="4-6-Design-Alternate-App-Icons"><a href="#4-6-Design-Alternate-App-Icons" class="headerlink" title="4. 6 Design - Alternate App Icons"></a>4. 6 Design - Alternate App Icons</h5><h5 id="Guideline-4-6-Design-Alternate-App-Icons"><a href="#Guideline-4-6-Design-Alternate-App-Icons" class="headerlink" title="Guideline 4.6 - Design - Alternate App Icons"></a>Guideline 4.6 - Design - Alternate App Icons</h5><p>We noticed that your app includes user-selectable icons but does not fulfill all of the requirements for using alternate icons. Specifically, </p>
+<ul>
+<li>your app includes user-selectable icons but does not provide a way to change the icons within the app.<h5 id="Next-Steps-1"><a href="#Next-Steps-1" class="headerlink" title="Next Steps"></a>Next Steps</h5>To resolve this issue, please ensure that your app’s icons can only be changed at the user’s request, are relevant to the content and functionality of your app, and can be reverted back to your app’s original icon.<br>For more information on user-selectable icons, including information on appropriate app icon sizes, please review the App Icon page of the iOS Human Interface Guidelines.<h2 id="之后我就临时屏蔽掉了应用中的动态修改图标功能，重新提交了应用。但是却再一次收到相似应用的提醒"><a href="#之后我就临时屏蔽掉了应用中的动态修改图标功能，重新提交了应用。但是却再一次收到相似应用的提醒" class="headerlink" title="之后我就临时屏蔽掉了应用中的动态修改图标功能，重新提交了应用。但是却再一次收到相似应用的提醒"></a>之后我就临时屏蔽掉了应用中的动态修改图标功能，重新提交了应用。但是却再一次收到相似应用的提醒</h2><h4 id="Nov-10-2017-at-12-47-AM"><a href="#Nov-10-2017-at-12-47-AM" class="headerlink" title="Nov 10, 2017 at 12:47 AM"></a>Nov 10, 2017 at 12:47 AM</h4><h5 id="From-Apple-3"><a href="#From-Apple-3" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="Guideline-4-3-Design-1"><a href="#Guideline-4-3-Design-1" class="headerlink" title="Guideline 4.3 - Design"></a>Guideline 4.3 - Design</h5>We noticed that your app appears to be created from a template. Your app provides the same feature set as many of the other apps you’ve submitted to the App Store; it simply varies in content or language.<br>Apps that duplicate content or functionality create clutter, diminish the overall experience for the end user, and reduce the ability of developers to market their apps.<h5 id="Next-Steps-2"><a href="#Next-Steps-2" class="headerlink" title="Next Steps"></a>Next Steps</h5>To resolve this issue, please combine apps with similar feature sets into a single “container” app (using the in-app purchase API to deliver different content if appropriate).<br>Please reply to this message to indicate the app name and Apple ID of any “container” apps submitted under your Apple Developer Program account.<br>Best regards,<br>App Store Review<h2 id="再次说明本应用为容器应用"><a href="#再次说明本应用为容器应用" class="headerlink" title="再次说明本应用为容器应用"></a>再次说明本应用为容器应用</h2><h4 id="Nov-11-2017-at-10-39-AM"><a href="#Nov-11-2017-at-10-39-AM" class="headerlink" title="Nov 11, 2017 at 10:39 AM"></a>Nov 11, 2017 at 10:39 AM</h4><h5 id="From-abcios-126-com-Co-Ltd-1"><a href="#From-abcios-126-com-Co-Ltd-1" class="headerlink" title="From abcios@126.com (*. Co., Ltd.)"></a>From abcios@126.com (<em>*</em>. Co., Ltd.)</h5>I’ve combined the apps with similar feature sets into a single “container” app. And the combined “container” app is just this one named “应用名称”. I’ve mentioned this before. What should I do now?<br>Best Regards,<br>Zhang San<h2 id="审核人员重新审核，表示登录不了，经排查应该是因为请求地址是纯ip地址，在IPV6网络环境下访问失败的问题"><a href="#审核人员重新审核，表示登录不了，经排查应该是因为请求地址是纯ip地址，在IPV6网络环境下访问失败的问题" class="headerlink" title="审核人员重新审核，表示登录不了，经排查应该是因为请求地址是纯ip地址，在IPV6网络环境下访问失败的问题"></a>审核人员重新审核，表示登录不了，经排查应该是因为请求地址是纯ip地址，在IPV6网络环境下访问失败的问题</h2><h4 id="Nov-11-2017-at-11-29-PM"><a href="#Nov-11-2017-at-11-29-PM" class="headerlink" title="Nov 11, 2017 at 11:29 PM"></a>Nov 11, 2017 at 11:29 PM</h4><h5 id="From-Apple-4"><a href="#From-Apple-4" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="4-3-Design-Spam"><a href="#4-3-Design-Spam" class="headerlink" title="4. 3 Design: Spam"></a>4. 3 Design: Spam</h5>Hello,<br>Thank you for providing this information. The app failed to log in and we are unable to access the app content. Screenshots of this issue have been attached for your reference.<br>Best Regards,<br>App Store Review<br>Screenshot-1111-072825.png<br>Screenshot-1111-072906.png<h2 id="在处理了ipv6的问题后，重新提交后又收到相似应用的回复"><a href="#在处理了ipv6的问题后，重新提交后又收到相似应用的回复" class="headerlink" title="在处理了ipv6的问题后，重新提交后又收到相似应用的回复"></a>在处理了ipv6的问题后，重新提交后又收到相似应用的回复</h2><h4 id="Nov-16-2017-at-8-20-AM"><a href="#Nov-16-2017-at-8-20-AM" class="headerlink" title="Nov 16, 2017 at 8:20 AM"></a>Nov 16, 2017 at 8:20 AM</h4><h5 id="From-Apple-5"><a href="#From-Apple-5" class="headerlink" title="From Apple"></a>From Apple</h5><h5 id="4-3-Design-Spam-1"><a href="#4-3-Design-Spam-1" class="headerlink" title="4. 3 Design: Spam"></a>4. 3 Design: Spam</h5>Guideline 4.3 - Design<br>This app duplicates the content and functionality of other apps submitted by you or another developer to the App Store, which is considered a form of spam.<br>Apps that simply duplicate content or functionality create clutter, diminish the overall experience for the end user, and reduce the ability of developers to market their apps.<br>The next submission of this app may require a longer review time.<h5 id="Next-Steps-3"><a href="#Next-Steps-3" class="headerlink" title="Next Steps"></a>Next Steps</h5></li>
+<li>Review the Design section of the App Store Review Guidelines.</li>
+<li>Ensure your app is compliant with all sections of the App Store Review Guidelines and the Terms &amp; Conditions of the Apple Developer Program. </li>
+<li>Once your app is fully compliant, resubmit your app for review.<br>Submitting apps designed to mislead or harm customers or evade the review process may result in the termination of your Apple Developer Program account. Review the Terms &amp; Conditions of the Apple Developer Program to learn more about our policies regarding termination.<br>If you believe your app is compliant with the App Store Review Guidelines, you may submit an appeal. Alternatively, you may provide additional details about your app by replying directly to this message.<h2 id="再次说明本应用为容器应用-1"><a href="#再次说明本应用为容器应用-1" class="headerlink" title="再次说明本应用为容器应用"></a>再次说明本应用为容器应用</h2><h4 id="Nov-16-2017-at-10-33-AM"><a href="#Nov-16-2017-at-10-33-AM" class="headerlink" title="Nov 16, 2017 at 10:33 AM"></a>Nov 16, 2017 at 10:33 AM</h4><h4 id="From-abcios-126-com-Co-Ltd-2"><a href="#From-abcios-126-com-Co-Ltd-2" class="headerlink" title="From abcios@126.com (*. Co., Ltd.)"></a>From abcios@126.com (<em>*</em>. Co., Ltd.)</h4>I’ve combined the apps with similar feature sets into a single “container” app. And the combined “container” app is just this one named “应用名称”. I’ve mentioned this before. What should I do now?<br>Best Regards,<br>Zhang San<br>#感想<br>这次的审核过程可谓是一波三折，从中可以看出每次提交审核之后，审核人员并不一定是上一次的审核人员，而且审核人员也不一定仔细查看了之前的审核记录，不然也不会在我说明了此应用为容器应用的情况下，每次都以同样的相似应用的理由拒绝。<br>还有，中间几次由于审核团队一直无视我前面的说明而以同样的方式拒绝，我还尝试过提起申述的方式。但是结果表明，申述的耗时比较长，而且一般也没能实际解决问题。相较而言，直接在iTunes Connect上进行回复还是较好的沟通方式。</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/17/记一次IOS审核交涉过程之相似应用被拒/" data-id="cjba9sv3r000fhhs6i7lqzesp" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-About" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/06/About/" class="article-date">
+  <time datetime="2017-11-06T09:12:10.000Z" itemprop="datePublished">2017-11-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/06/About/">About</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="关于此主页"><a href="#关于此主页" class="headerlink" title="关于此主页"></a>关于此主页</h1><p>发现github主页挺适合做个人博客的，但是发现在这上面的文章不能被百度检索到，因此在国内的环境下，写了文章想要分享出去，只放到github上还是挺艰难的。后来发现简书是一个好东西，可以很方便地进行写作与分享，但是文章放到第三方平台上多多少少还是会有风险的，万一哪天简书重心从博客上移走了呢，甚至万一倒闭了呢。。所以各有各的优点，都用一用吧。</p>
+<h1 id="关于Hexo"><a href="#关于Hexo" class="headerlink" title="关于Hexo"></a>关于Hexo</h1><p>Hexo是一个个人博客发布工具，框架。作者只用把markdown格式的文章写好，丢到指定目录下，就可以用hexo的命令更新网页文件，然后再用hexo的发布命令将网页文件同步到github主页对应的repository下，就是这么轻松。Hexo搭建以及与github主页关联的步骤这里就不赘述了。而现在想要新写一篇文章的步骤可以列为以下步骤：<br>1.进入terminal，切换目录到hexo的目录下，我的是“/Users/jzj/Documents/hexo_config”<br><code>cd /Users/jzj/Documents/hexo_config</code><br>2.用hexo新建一个文档<br><code>hexo new doc1</code><br>3.在hexo目录下的文档子目录下找到刚刚新建的文章，我的是“/Users/jzj/Documents/hexo_config/source/_posts/doc1.md”用markdown编辑器进行编辑<br>4.编辑完md文档后，在terminal中用hexo生成网页文件<br><code>hexo generate</code><br>5.用hexo将生成的网页文件同步到github中<br><code>hexo deploy</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/11/06/About/" data-id="cjba9sv3m000bhhs6vp58as76" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/30/hello-world/" class="article-date">
+  <time datetime="2017-10-30T08:41:16.000Z" itemprop="datePublished">2017-10-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/30/hello-world/">Hello World</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/10/30/hello-world/" data-id="cjba9sv3o000chhs6l32st0j4" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archieven</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recente berichten</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/17/MBA外接显示器后关闭自带显示器/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/AFNetwork信号量转异步请求为同步请求引起死锁问题解决/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS之多重代理（转载）/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS判断应用是否在新版本下第一次调用某方法/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/17/IOS审核之不支持IPV6/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 Jiang Zijie<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
